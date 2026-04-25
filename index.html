@@ -22,6 +22,7 @@ max-width:520px;
 margin:auto;
 min-height:100vh;
 background:#fffaf3;
+position:relative;
 }
 
 .header{
@@ -31,6 +32,48 @@ justify-content:space-between;
 align-items:center;
 color:#9b3f00;
 font-weight:900;
+position:relative;
+z-index:20;
+}
+
+.menu-btn{
+font-size:34px;
+font-weight:900;
+cursor:pointer;
+line-height:1;
+padding:6px 10px;
+border-radius:12px;
+}
+
+.menu-panel{
+display:none;
+position:absolute;
+top:62px;
+left:18px;
+right:18px;
+background:white;
+border-radius:22px;
+box-shadow:0 18px 35px rgba(130,70,0,.18);
+padding:14px;
+z-index:30;
+}
+
+.menu-panel a{
+display:block;
+padding:15px;
+border-radius:14px;
+text-decoration:none;
+color:#5a2b0c;
+font-weight:900;
+border-bottom:1px solid #ffe0bf;
+}
+
+.menu-panel a:last-child{
+border-bottom:none;
+}
+
+.menu-panel a:hover{
+background:#fff1df;
 }
 
 .hero{
@@ -75,7 +118,6 @@ padding:14px 18px;
 border-radius:14px;
 font-weight:900;
 text-decoration:none;
-box-shadow:0 10px 20px rgba(255,90,0,.25);
 }
 
 .hot-card{
@@ -87,7 +129,6 @@ background:rgba(255,255,255,.92);
 border-radius:22px;
 padding:14px;
 font-weight:900;
-box-shadow:0 10px 20px rgba(0,0,0,.12);
 }
 
 .section{
@@ -154,8 +195,7 @@ color:#2b1608;
 }
 
 .bar-img{
-background:
-url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80");
+background:url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80");
 background-size:cover;
 background-position:center;
 min-height:120px;
@@ -219,30 +259,6 @@ border-radius:20px;
 padding:20px;
 text-align:center;
 color:#7b5a40;
-box-shadow:0 8px 20px rgba(130,70,0,.08);
-}
-
-.promo{
-background:white;
-border-radius:24px;
-padding:20px;
-box-shadow:0 10px 24px rgba(130,70,0,.12);
-border:1px solid #ffe0bf;
-background:
-linear-gradient(90deg,rgba(255,255,255,.95),rgba(255,242,220,.7)),
-url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=80");
-background-size:cover;
-background-position:center;
-}
-
-.promo h3{
-color:#ff5a00;
-font-size:17px;
-margin-bottom:8px;
-}
-
-.promo strong{
-font-size:26px;
 }
 
 .add-link{
@@ -278,6 +294,7 @@ text-align:center;
 font-size:12px;
 color:#6b5140;
 font-weight:700;
+text-decoration:none;
 }
 
 .nav-item span{
@@ -292,7 +309,6 @@ margin-bottom:4px;
 .app{max-width:100%}
 .hero{min-height:310px}
 .bar-card{grid-template-columns:115px 1fr}
-h1{font-size:30px}
 }
 </style>
 </head>
@@ -302,19 +318,24 @@ h1{font-size:30px}
 <div class="app">
 
 <div class="header">
-<div>☰</div>
+<div class="menu-btn" id="menuBtn">☰</div>
 <div>Bonjourrrraaaaaaan</div>
 <div>♡</div>
+
+<div class="menu-panel" id="menuPanel">
+<a href="ajouter.html">➕ Ajouter son bar</a>
+<a href="carte.html">🗺️ Accéder à la carte</a>
+<a href="#bars">🔥 Bars validés</a>
+<a href="classement.html">⭐ Classements</a>
+<a href="admin.html">🔐 Admin</a>
+</div>
 </div>
 
 <div class="hero">
 <h1>Envie d’un <span>samoussa</span> aujourd’hui ?</h1>
 <p>Les meilleurs bars à samoussas près de chez toi.</p>
 <a href="#bars" class="cta">Voir les bars autour de moi</a>
-
-<div class="hot-card">
-Encore chaud ? Goûte le péi !
-</div>
+<div class="hot-card">Encore chaud ? Goûte le péi !</div>
 </div>
 
 <div class="section">
@@ -337,21 +358,13 @@ Encore chaud ? Goûte le péi !
 </div>
 </div>
 
-<div class="section">
-<div class="promo">
-<h3>Samoussa du jour</h3>
-<strong>Poulet massalé</strong>
-<p>Découvre les meilleures adresses validées sur Samouss'App.</p>
-</div>
-</div>
-
 <a class="add-link" href="ajouter.html">Ajouter mon bar à samoussas</a>
 
 <div class="bottom-nav">
-<div class="nav-item active"><span>⌂</span>Accueil</div>
-<div class="nav-item"><span>⌕</span>Recherche</div>
-<div class="nav-item"><span>♡</span>Favoris</div>
-<div class="nav-item"><span>☻</span>Compte</div>
+<a class="nav-item active" href="index.html"><span>⌂</span>Accueil</a>
+<a class="nav-item" href="carte.html"><span>⌕</span>Carte</a>
+<a class="nav-item" href="ajouter.html"><span>＋</span>Ajouter</a>
+<a class="nav-item" href="classement.html"><span>★</span>Top</a>
 </div>
 
 </div>
@@ -360,6 +373,11 @@ Encore chaud ? Goûte le péi !
 const supabaseUrl = "https://ofbtvqnfcnzqptnzkkkq.supabase.co";
 const supabaseKey = "sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+document.getElementById("menuBtn").addEventListener("click", function(){
+const menu = document.getElementById("menuPanel");
+menu.style.display = menu.style.display === "block" ? "none" : "block";
+});
 
 async function loadBars(){
 const barsList = document.getElementById("barsList");
