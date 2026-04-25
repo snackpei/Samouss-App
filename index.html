@@ -19,7 +19,6 @@ padding:30px;
 }
 
 .container{max-width:1250px;margin:auto;text-align:center}
-
 .logo{width:170px;margin:auto;animation:floaty 3s ease-in-out infinite}
 .logo svg{width:100%;display:block}
 
@@ -28,18 +27,8 @@ padding:30px;
 50%{transform:translateY(-8px)}
 }
 
-h1{
-font-size:82px;
-color:#ff7300;
-font-weight:900;
-line-height:1;
-}
-
-.subtitle{
-font-size:30px;
-margin:18px 0 32px;
-color:#6b3718;
-}
+h1{font-size:82px;color:#ff7300;font-weight:900;line-height:1}
+.subtitle{font-size:30px;margin:18px 0 32px;color:#6b3718}
 
 .form-box{
 background:rgba(255,255,255,.88);
@@ -49,25 +38,10 @@ box-shadow:0 20px 55px rgba(115,65,20,.13);
 text-align:left;
 }
 
-.form-box h2{
-text-align:center;
-font-size:36px;
-margin-bottom:28px;
-}
+.form-box h2{text-align:center;font-size:36px;margin-bottom:28px}
+.top-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
 
-.top-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:24px;
-}
-
-label{
-display:block;
-font-weight:800;
-font-size:15px;
-margin-bottom:9px;
-}
-
+label{display:block;font-weight:800;font-size:15px;margin-bottom:9px}
 .req{color:#ff6500}
 
 input,textarea{
@@ -80,10 +54,7 @@ background:white;
 outline:none;
 }
 
-textarea{
-height:126px;
-resize:none;
-}
+textarea{height:126px;resize:none}
 
 .middle-grid{
 display:grid;
@@ -92,11 +63,7 @@ gap:28px;
 margin-top:26px;
 }
 
-.check-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
-}
+.check-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 
 .check-item{
 border:1.5px solid #ffb06a;
@@ -109,11 +76,7 @@ gap:10px;
 font-weight:800;
 }
 
-.check-item input{
-width:17px;
-height:17px;
-accent-color:#ff7300;
-}
+.check-item input{width:17px;height:17px;accent-color:#ff7300}
 
 .textarea-box{position:relative}
 
@@ -138,23 +101,31 @@ background:linear-gradient(180deg,#ff8a00,#ff5a00);
 cursor:pointer;
 }
 
-.success,.error{
-display:none;
+.message{
 margin-top:16px;
 padding:14px;
 border-radius:10px;
 text-align:center;
 font-weight:800;
+display:none;
 }
 
-.success{
+.message.ok{
+display:block;
 background:#e8ffe8;
 color:#1f6b1f;
 }
 
-.error{
+.message.error{
+display:block;
 background:#ffe8e8;
 color:#9b1c1c;
+}
+
+.message.loading{
+display:block;
+background:#fff4d8;
+color:#8a5700;
 }
 
 @media(max-width:950px){
@@ -247,15 +218,9 @@ h1{font-size:44px}
 
 </div>
 
-<button type="submit">Ajouter mon bar</button>
+<button id="submitBtn" type="submit">Ajouter mon bar</button>
 
-<div class="success" id="successMsg">
-Ton commerce a bien été envoyé en attente de validation ✅
-</div>
-
-<div class="error" id="errorMsg">
-Erreur lors de l’envoi. Vérifie Supabase.
-</div>
+<div id="formMessage" class="message"></div>
 
 </form>
 
@@ -264,11 +229,16 @@ Erreur lors de l’envoi. Vérifie Supabase.
 </div>
 
 <script>
-const SUPABASE_URL = "https://ofbtvqnfcnzqptnzkkkq.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
+document.addEventListener("DOMContentLoaded", function(){
 
-const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabaseUrl = "https://ofbtvqnfcnzqptnzkkkq.supabase.co";
+const supabaseKey = "sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
 
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+const form = document.getElementById("barForm");
+const message = document.getElementById("formMessage");
+const submitBtn = document.getElementById("submitBtn");
 const presentation = document.getElementById("presentation");
 const count = document.getElementById("count");
 
@@ -285,19 +255,22 @@ return text
 .replace(/^-+|-+$/g,"");
 }
 
-document.getElementById("barForm").addEventListener("submit", async function(e){
+form.addEventListener("submit", async function(e){
 e.preventDefault();
 
-document.getElementById("successMsg").style.display = "none";
-document.getElementById("errorMsg").style.display = "none";
+message.className = "message loading";
+message.textContent = "Envoi en cours...";
+submitBtn.disabled = true;
 
 let types = [];
-document.querySelectorAll(".typeBox:checked").forEach(box=>{
+document.querySelectorAll(".typeBox:checked").forEach(function(box){
 types.push(box.value);
 });
 
 if(types.length === 0){
-alert("Choisis au moins un type de samoussa.");
+message.className = "message error";
+message.textContent = "Choisis au moins un type de samoussa.";
+submitBtn.disabled = false;
 return;
 }
 
@@ -315,19 +288,24 @@ slug: createSlug(nom),
 statut: "en_attente"
 };
 
-const { error } = await client
+const result = await supabaseClient
 .from("BARS")
 .insert([data]);
 
-if(error){
-console.error(error);
-document.getElementById("errorMsg").style.display = "block";
+if(result.error){
+message.className = "message error";
+message.textContent = "Erreur : " + result.error.message;
+submitBtn.disabled = false;
 return;
 }
 
-document.getElementById("successMsg").style.display = "block";
-this.reset();
+message.className = "message ok";
+message.textContent = "Bar proposé avec succès 🔥 En attente de validation.";
+form.reset();
 count.textContent = "0";
+submitBtn.disabled = false;
+});
+
 });
 </script>
 
