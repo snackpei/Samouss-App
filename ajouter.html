@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ajouter un bar - Samouss'App</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff7300">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:Arial,sans-serif;
+background:linear-gradient(180deg,#fff8ef,#ffe8cf);
+color:#2b1608;
+padding-bottom:90px;
+}
+
+.app{
+max-width:520px;
+margin:auto;
+min-height:100vh;
+background:#fffaf3;
+}
+
+.header{
+padding:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-weight:900;
+color:#9b3f00;
+}
+
+.header a{
+text-decoration:none;
+color:#9b3f00;
+font-size:30px;
+}
+
+.hero{
+margin:0 18px 18px;
+background:white;
+border-radius:28px;
+padding:24px;
+box-shadow:0 14px 30px rgba(130,70,0,.12);
+}
+
+.hero h1{
+font-size:30px;
+color:#ff7300;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:15px;
+line-height:1.5;
+color:#6d5a47;
+}
+
+.form-box{
+margin:18px;
+background:white;
+border-radius:28px;
+padding:22px;
+box-shadow:0 14px 30px rgba(130,70,0,.12);
+}
+
+label{
+display:block;
+font-weight:900;
+margin:16px 0 8px;
+color:#4b250c;
+}
+
+input,textarea{
+width:100%;
+border:1.5px solid #ffb06a;
+border-radius:14px;
+padding:14px;
+font-size:15px;
+outline:none;
+background:#fffaf3;
+}
+
+textarea{
+height:130px;
+resize:none;
+}
+
+.counter{
+text-align:right;
+font-size:13px;
+color:#8a6a50;
+margin-top:6px;
+}
+
+.check-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:8px;
+}
+
+.check-item{
+border:1.5px solid #ffb06a;
+border-radius:14px;
+background:#fffaf3;
+padding:13px;
+display:flex;
+align-items:center;
+gap:9px;
+font-weight:900;
+}
+
+.check-item input{
+width:18px;
+height:18px;
+accent-color:#ff7300;
+}
+
+button{
+width:100%;
+margin-top:20px;
+border:none;
+border-radius:16px;
+padding:17px;
+font-size:18px;
+font-weight:900;
+color:white;
+background:linear-gradient(180deg,#ff8a00,#ff5a00);
+cursor:pointer;
+}
+
+.message{
+display:none;
+margin-top:16px;
+padding:14px;
+border-radius:14px;
+text-align:center;
+font-weight:900;
+}
+
+.message.ok{
+display:block;
+background:#e8ffe8;
+color:#1f6b1f;
+}
+
+.message.error{
+display:block;
+background:#ffe8e8;
+color:#9b1c1c;
+}
+
+.message.loading{
+display:block;
+background:#fff4d8;
+color:#8a5700;
+}
+
+.bottom-nav{
+position:fixed;
+left:50%;
+bottom:0;
+transform:translateX(-50%);
+width:100%;
+max-width:520px;
+background:white;
+border-radius:28px 28px 0 0;
+box-shadow:0 -8px 25px rgba(0,0,0,.08);
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:12px 5px;
+z-index:10;
+}
+
+.nav-item{
+text-align:center;
+font-size:12px;
+color:#6b5140;
+font-weight:700;
+text-decoration:none;
+}
+
+.nav-item span{
+display:block;
+font-size:24px;
+margin-bottom:4px;
+}
+
+.active{color:#ff7300}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="header">
+<a href="index.html">‹</a>
+<div>Ajouter un bar</div>
+<div>♡</div>
+</div>
+
+<div class="hero">
+<h1>Ajoute ton bar à samoussas</h1>
+<p>Remplis ce formulaire pour proposer ton commerce sur Samouss'App. Après validation, ta fiche pourra apparaître dans l’application.</p>
+</div>
+
+<div class="form-box">
+
+<form id="barForm">
+
+<label>Nom du bar *</label>
+<input type="text" id="nom" placeholder="Ex : Le Goût Péi" required>
+
+<label>Ville *</label>
+<input type="text" id="ville" placeholder="Ex : Saint-Pierre" required>
+
+<label>Adresse *</label>
+<input type="text" id="adresse" placeholder="Ex : 12 rue des Samoussas" required>
+
+<label>Téléphone / WhatsApp *</label>
+<input type="text" id="telephone" placeholder="Ex : 0692 00 00 00" required>
+
+<label>Types proposés *</label>
+<div class="check-grid">
+<label class="check-item"><input type="checkbox" value="Poulet" class="typeBox"> Poulet</label>
+<label class="check-item"><input type="checkbox" value="Porc" class="typeBox"> Porc</label>
+<label class="check-item"><input type="checkbox" value="Végé" class="typeBox"> Végé</label>
+<label class="check-item"><input type="checkbox" value="Halal" class="typeBox"> Halal</label>
+<label class="check-item"><input type="checkbox" value="Bœuf" class="typeBox"> Bœuf</label>
+<label class="check-item"><input type="checkbox" value="Spéciaux" class="typeBox"> Spéciaux</label>
+</div>
+
+<label>Présentation du commerce *</label>
+<textarea maxlength="500" id="presentation" placeholder="Présente ton commerce en quelques mots..." required></textarea>
+<div class="counter"><span id="count">0</span>/500</div>
+
+<button id="submitBtn" type="submit">Envoyer la proposition</button>
+
+<div id="formMessage" class="message"></div>
+
+</form>
+
+</div>
+
+<div class="bottom-nav">
+<a class="nav-item" href="index.html"><span>⌂</span>Accueil</a>
+<a class="nav-item" href="carte.html"><span>⌕</span>Carte</a>
+<a class="nav-item active" href="ajouter.html"><span>＋</span>Ajouter</a>
+<a class="nav-item" href="classement.html"><span>★</span>Top</a>
+</div>
+
+</div>
+
+<script>
+const supabaseUrl = "https://ofbtvqnfcnzqptnzkkkq.supabase.co";
+const supabaseKey = "sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+const form = document.getElementById("barForm");
+const message = document.getElementById("formMessage");
+const submitBtn = document.getElementById("submitBtn");
+const presentation = document.getElementById("presentation");
+const count = document.getElementById("count");
+
+presentation.addEventListener("input", function(){
+count.textContent = this.value.length;
+});
+
+function createSlug(text){
+return text
+.toLowerCase()
+.normalize("NFD")
+.replace(/[\u0300-\u036f]/g,"")
+.replace(/[^a-z0-9]+/g,"-")
+.replace(/^-+|-+$/g,"");
+}
+
+form.addEventListener("submit", async function(e){
+e.preventDefault();
+
+message.className = "message loading";
+message.textContent = "Envoi en cours...";
+submitBtn.disabled = true;
+
+let types = [];
+document.querySelectorAll(".typeBox:checked").forEach(function(box){
+types.push(box.value);
+});
+
+if(types.length === 0){
+message.className = "message error";
+message.textContent = "Choisis au moins un type de samoussa.";
+submitBtn.disabled = false;
+return;
+}
+
+const nom = document.getElementById("nom").value.trim();
+
+const data = {
+NOM: nom,
+VILLE: document.getElementById("ville").value.trim(),
+ADRESSE: document.getElementById("adresse").value.trim(),
+TELEPHONE: document.getElementById("telephone").value.trim(),
+PRESENTATION: document.getElementById("presentation").value.trim(),
+TYPES: types.join(", "),
+PHOTOS: "",
+SLUG: createSlug(nom),
+STATUT: "en_attente"
+};
+
+const result = await supabaseClient
+.from("BARS")
+.insert([data]);
+
+if(result.error){
+message.className = "message error";
+message.textContent = "Erreur : " + result.error.message;
+submitBtn.disabled = false;
+return;
+}
+
+message.className = "message ok";
+message.textContent = "Bar proposé avec succès 🔥 En attente de validation.";
+form.reset();
+count.textContent = "0";
+submitBtn.disabled = false;
+});
+
+if("serviceWorker" in navigator){
+navigator.serviceWorker.register("sw.js");
+}
+</script>
+
+</body>
+</html>
