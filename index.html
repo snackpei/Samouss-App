@@ -22,10 +22,24 @@ margin:auto;
 text-align:center;
 }
 
+.logo-samoussa{
+width:95px;
+height:82px;
+margin:0 auto 12px;
+position:relative;
+filter:drop-shadow(0 10px 14px rgba(142,78,0,.22));
+}
+
+.logo-samoussa svg{
+width:100%;
+height:100%;
+}
+
 h1{
 font-size:44px;
-color:#ff8a00;
+color:#ff7b00;
 margin-bottom:10px;
+font-weight:900;
 }
 
 .subtitle{
@@ -54,13 +68,14 @@ font-weight:bold;
 margin:14px 0 6px;
 }
 
-input, textarea, select{
+input, textarea{
 width:100%;
 padding:14px;
 border:1px solid #ffd39b;
 border-radius:14px;
 font-size:15px;
 outline:none;
+background:#fffdf9;
 }
 
 textarea{
@@ -106,6 +121,12 @@ color:#ff7b00;
 font-weight:bold;
 text-decoration:none;
 }
+
+.brand{
+font-size:15px;
+margin-top:10px;
+color:#9a6a3a;
+}
 </style>
 </head>
 
@@ -113,8 +134,37 @@ text-decoration:none;
 
 <div class="container">
 
-<h1>Bonjourrrraaaaaaan 🥟</h1>
-<p class="subtitle">Ajoute ton bar à samoussas sur Samouss'App</p>
+<div class="logo-samoussa">
+<svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#ffd36a"/>
+<stop offset="45%" stop-color="#f28a12"/>
+<stop offset="100%" stop-color="#b84b00"/>
+</linearGradient>
+<radialGradient id="shine" cx="35%" cy="25%" r="60%">
+<stop offset="0%" stop-color="#fff1b8" stop-opacity="0.9"/>
+<stop offset="55%" stop-color="#ffb347" stop-opacity="0.35"/>
+<stop offset="100%" stop-color="#a74300" stop-opacity="0"/>
+</radialGradient>
+</defs>
+
+<path d="M60 8 C72 29 91 57 108 87 C75 89 42 89 12 87 C29 57 48 29 60 8Z"
+fill="url(#gold)" stroke="#8f3a00" stroke-width="3"/>
+
+<path d="M60 8 C72 29 91 57 108 87 C75 89 42 89 12 87 C29 57 48 29 60 8Z"
+fill="url(#shine)"/>
+
+<path d="M28 78 C48 67 73 66 94 78" fill="none" stroke="#7a2f00" stroke-width="3" opacity=".45"/>
+
+<circle cx="55" cy="43" r="3" fill="#9c3d00" opacity=".45"/>
+<circle cx="69" cy="57" r="2.6" fill="#9c3d00" opacity=".38"/>
+<circle cx="45" cy="63" r="2.2" fill="#9c3d00" opacity=".32"/>
+</svg>
+</div>
+
+<h1>Bonjourrrraaaaaaan</h1>
+<p class="subtitle">Ajoute ton bar à samoussas sur <strong>Samouss'App</strong></p>
 
 <div class="form-box">
 <h2>Formulaire d’ajout</h2>
@@ -133,15 +183,6 @@ text-decoration:none;
 <label>Téléphone / WhatsApp</label>
 <input type="tel" id="telephone" placeholder="Ex : 0692 00 00 00" required>
 
-<label>Catégories proposées</label>
-<select id="categorie" required>
-<option value="">Choisir une catégorie principale</option>
-<option value="Végé">Végé</option>
-<option value="Poulet">Poulet</option>
-<option value="Porc">Porc</option>
-<option value="Mixte">Mixte</option>
-</select>
-
 <label>Description</label>
 <textarea id="description" placeholder="Ex : Samoussas chauds, faits maison, disponibles tous les jours."></textarea>
 
@@ -155,6 +196,7 @@ Ton bar a bien été ajouté en attente de validation ✅
 </div>
 
 <a href="#" class="back">Retour à l’accueil</a>
+<div class="brand">Samouss'App — Le meilleur du samoussa arrive bientôt</div>
 
 </div>
 
@@ -167,7 +209,6 @@ nom: document.getElementById("nom").value,
 ville: document.getElementById("ville").value,
 adresse: document.getElementById("adresse").value,
 telephone: document.getElementById("telephone").value,
-categorie: document.getElementById("categorie").value,
 description: document.getElementById("description").value
 };
 
