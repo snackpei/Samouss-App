@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Samouss'App</title>
 
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff7300">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -179,6 +182,10 @@ loadBars();
 }
 
 loadBars();
+
+if("serviceWorker" in navigator){
+navigator.serviceWorker.register("sw.js");
+}
 </script>
 
 </body>
