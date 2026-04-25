@@ -9,200 +9,407 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:radial-gradient(circle at top,#fffaf4,#fff1df);color:#5a2b0c;min-height:100vh;padding:30px}
-.container{max-width:1250px;margin:auto;text-align:center}
-.logo{width:170px;margin:auto;animation:floaty 3s ease-in-out infinite}
-.logo svg{width:100%;display:block}
-@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-h1{font-size:82px;color:#ff7300;font-weight:900;line-height:1}
-.subtitle{font-size:30px;margin:18px 0 32px;color:#6b3718}
-.form-box{background:rgba(255,255,255,.88);border-radius:22px;padding:34px;box-shadow:0 20px 55px rgba(115,65,20,.13);text-align:left}
-.form-box h2{text-align:center;font-size:36px;margin-bottom:28px}
-.top-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-label{display:block;font-weight:800;font-size:15px;margin-bottom:9px}
-.req{color:#ff6500}
-input,textarea{width:100%;border:1.5px solid #ffb06a;border-radius:8px;padding:14px;font-size:15px;background:white;outline:none}
-textarea{height:126px;resize:none}
-.middle-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:26px}
-.check-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.check-item{border:1.5px solid #ffb06a;border-radius:8px;background:white;padding:15px;display:flex;align-items:center;gap:10px;font-weight:800}
-.check-item input{width:17px;height:17px;accent-color:#ff7300}
-.textarea-box{position:relative}
-.counter{position:absolute;right:14px;bottom:12px;font-size:13px;color:#7b644f}
-button{width:100%;border:none;border-radius:8px;margin-top:16px;padding:19px;font-size:24px;font-weight:900;color:white;background:linear-gradient(180deg,#ff8a00,#ff5a00);cursor:pointer}
-.message{margin-top:16px;padding:14px;border-radius:10px;text-align:center;font-weight:800;display:none}
-.message.ok{display:block;background:#e8ffe8;color:#1f6b1f}
-.message.error{display:block;background:#ffe8e8;color:#9b1c1c}
-.message.loading{display:block;background:#fff4d8;color:#8a5700}
-@media(max-width:950px){h1{font-size:44px}.subtitle{font-size:20px}.top-grid,.middle-grid{grid-template-columns:1fr}.check-grid{grid-template-columns:1fr}}
+
+body{
+font-family:Arial,sans-serif;
+background:linear-gradient(180deg,#fff8ef,#ffe8cf);
+color:#2b1608;
+padding-bottom:90px;
+}
+
+.app{
+max-width:520px;
+margin:auto;
+min-height:100vh;
+background:#fffaf3;
+}
+
+.header{
+padding:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:#9b3f00;
+font-weight:900;
+}
+
+.hero{
+margin:0 18px;
+border-radius:28px;
+padding:28px 22px;
+min-height:330px;
+background:
+linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,115,0,.25)),
+url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80");
+background-size:cover;
+background-position:center;
+position:relative;
+overflow:hidden;
+box-shadow:0 18px 35px rgba(130,70,0,.18);
+}
+
+.hero h1{
+font-size:34px;
+line-height:1.05;
+max-width:280px;
+}
+
+.hero h1 span{
+color:#ff5a00;
+font-style:italic;
+}
+
+.hero p{
+margin-top:14px;
+font-size:15px;
+max-width:260px;
+font-weight:700;
+}
+
+.cta{
+display:inline-block;
+margin-top:20px;
+background:#ff6a00;
+color:white;
+padding:14px 18px;
+border-radius:14px;
+font-weight:900;
+text-decoration:none;
+box-shadow:0 10px 20px rgba(255,90,0,.25);
+}
+
+.hot-card{
+position:absolute;
+left:18px;
+right:18px;
+bottom:18px;
+background:rgba(255,255,255,.92);
+border-radius:22px;
+padding:14px;
+font-weight:900;
+box-shadow:0 10px 20px rgba(0,0,0,.12);
+}
+
+.section{
+padding:22px 18px 0;
+}
+
+.section-title{
+font-size:24px;
+font-weight:900;
+margin-bottom:14px;
+}
+
+.categories{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+}
+
+.category{
+background:white;
+border-radius:20px;
+padding:16px 10px;
+text-align:center;
+box-shadow:0 8px 20px rgba(130,70,0,.10);
+border:1px solid #ffe0bf;
+font-weight:900;
+}
+
+.cat-icon{
+width:46px;
+height:46px;
+border-radius:50%;
+margin:0 auto 8px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:23px;
+color:white;
+}
+
+.green{background:#7bbf2a}
+.orange{background:#ff7a00}
+.red{background:#e85045}
+.gold{background:#ffb000}
+.brown{background:#8b4513}
+.pink{background:#ff7aa2}
+
+.bars-list{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.bar-card{
+background:white;
+border-radius:24px;
+overflow:hidden;
+display:grid;
+grid-template-columns:130px 1fr;
+box-shadow:0 10px 24px rgba(130,70,0,.12);
+border:1px solid #ffe0bf;
+text-decoration:none;
+color:#2b1608;
+}
+
+.bar-img{
+background:
+url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80");
+background-size:cover;
+background-position:center;
+min-height:120px;
+position:relative;
+}
+
+.open{
+position:absolute;
+top:10px;
+left:10px;
+background:#eaffdf;
+color:#218b25;
+padding:5px 9px;
+border-radius:999px;
+font-size:12px;
+font-weight:900;
+}
+
+.bar-content{
+padding:14px;
+}
+
+.bar-title{
+font-size:17px;
+font-weight:900;
+margin-bottom:7px;
+}
+
+.rating{
+font-size:13px;
+color:#ff8a00;
+font-weight:900;
+margin-bottom:7px;
+}
+
+.meta{
+font-size:13px;
+color:#6d5a47;
+margin-bottom:7px;
+}
+
+.tags{
+display:flex;
+gap:5px;
+flex-wrap:wrap;
+}
+
+.tag{
+font-size:11px;
+background:#fff1df;
+border:1px solid #ffb06a;
+color:#d85d00;
+border-radius:999px;
+padding:4px 7px;
+font-weight:900;
+}
+
+.empty{
+background:white;
+border-radius:20px;
+padding:20px;
+text-align:center;
+color:#7b5a40;
+box-shadow:0 8px 20px rgba(130,70,0,.08);
+}
+
+.promo{
+background:white;
+border-radius:24px;
+padding:20px;
+box-shadow:0 10px 24px rgba(130,70,0,.12);
+border:1px solid #ffe0bf;
+background:
+linear-gradient(90deg,rgba(255,255,255,.95),rgba(255,242,220,.7)),
+url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=80");
+background-size:cover;
+background-position:center;
+}
+
+.promo h3{
+color:#ff5a00;
+font-size:17px;
+margin-bottom:8px;
+}
+
+.promo strong{
+font-size:26px;
+}
+
+.add-link{
+display:block;
+margin:22px 18px 0;
+background:#5a2b0c;
+color:white;
+text-align:center;
+padding:16px;
+border-radius:18px;
+font-weight:900;
+text-decoration:none;
+}
+
+.bottom-nav{
+position:fixed;
+left:50%;
+bottom:0;
+transform:translateX(-50%);
+width:100%;
+max-width:520px;
+background:white;
+border-radius:28px 28px 0 0;
+box-shadow:0 -8px 25px rgba(0,0,0,.08);
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:12px 5px;
+z-index:10;
+}
+
+.nav-item{
+text-align:center;
+font-size:12px;
+color:#6b5140;
+font-weight:700;
+}
+
+.nav-item span{
+display:block;
+font-size:24px;
+margin-bottom:4px;
+}
+
+.active{color:#ff7300}
+
+@media(max-width:520px){
+.app{max-width:100%}
+.hero{min-height:310px}
+.bar-card{grid-template-columns:115px 1fr}
+h1{font-size:30px}
+}
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
-<div class="logo">
-<svg viewBox="0 0 300 300">
-<defs>
-<linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
-<stop offset="0%" stop-color="#ffd37c"/>
-<stop offset="100%" stop-color="#f28a12"/>
-</linearGradient>
-</defs>
-<path d="M150 30 L255 225 L45 225 Z" fill="url(#g1)" stroke="#d87000" stroke-width="6"/>
-<circle cx="115" cy="145" r="28" fill="white"/>
-<circle cx="185" cy="145" r="28" fill="white"/>
-<circle cx="115" cy="145" r="15" fill="#2a1208"/>
-<circle cx="185" cy="145" r="15" fill="#2a1208"/>
-<circle cx="120" cy="138" r="5" fill="white"/>
-<circle cx="190" cy="138" r="5" fill="white"/>
-<circle cx="92" cy="175" r="12" fill="#ff9b8c"/>
-<circle cx="208" cy="175" r="12" fill="#ff9b8c"/>
-<path d="M125 195 Q150 225 175 195" stroke="#5b1900" stroke-width="8" fill="none" stroke-linecap="round"/>
-</svg>
+<div class="header">
+<div>☰</div>
+<div>Bonjourrrraaaaaaan</div>
+<div>♡</div>
 </div>
 
-<h1>Bonjourrrraaaaaaan</h1>
-<p class="subtitle">Ajoute ton bar à samoussas sur <strong>Samouss'App</strong></p>
+<div class="hero">
+<h1>Envie d’un <span>samoussa</span> aujourd’hui ?</h1>
+<p>Les meilleurs bars à samoussas près de chez toi.</p>
+<a href="#bars" class="cta">Voir les bars autour de moi</a>
 
-<div class="form-box">
-<h2>Formulaire d’ajout</h2>
-
-<form id="barForm">
-
-<div class="top-grid">
-<div>
-<label>Nom du bar <span class="req">*</span></label>
-<input type="text" id="nom" required>
-</div>
-
-<div>
-<label>Ville <span class="req">*</span></label>
-<input type="text" id="ville" required>
-</div>
-
-<div>
-<label>Adresse <span class="req">*</span></label>
-<input type="text" id="adresse" required>
-</div>
-
-<div>
-<label>Téléphone <span class="req">*</span></label>
-<input type="text" id="telephone" required>
+<div class="hot-card">
+Encore chaud ? Goûte le péi !
 </div>
 </div>
 
-<div class="middle-grid">
+<div class="section">
+<div class="section-title">Catégories</div>
 
-<div>
-<label>Types proposés <span class="req">*</span></label>
-<div class="check-grid">
-<label class="check-item"><input type="checkbox" value="Poulet" class="typeBox"> Poulet</label>
-<label class="check-item"><input type="checkbox" value="Porc" class="typeBox"> Porc</label>
-<label class="check-item"><input type="checkbox" value="Végé" class="typeBox"> Végé</label>
-<label class="check-item"><input type="checkbox" value="Halal" class="typeBox"> Halal</label>
-<label class="check-item"><input type="checkbox" value="Bœuf" class="typeBox"> Bœuf</label>
-<label class="check-item"><input type="checkbox" value="Spéciaux" class="typeBox"> Spéciaux</label>
+<div class="categories">
+<div class="category"><div class="cat-icon green">🌿</div>Végé</div>
+<div class="category"><div class="cat-icon orange">🐔</div>Poulet</div>
+<div class="category"><div class="cat-icon red">🐷</div>Porc</div>
+<div class="category"><div class="cat-icon gold">☪</div>Halal</div>
+<div class="category"><div class="cat-icon brown">🐂</div>Bœuf</div>
+<div class="category"><div class="cat-icon pink">⭐</div>Spéciaux</div>
 </div>
 </div>
 
-<div>
-<label>Présentation du commerce <span class="req">*</span></label>
-<div class="textarea-box">
-<textarea maxlength="500" id="presentation" required></textarea>
-<div class="counter"><span id="count">0</span>/500</div>
+<div class="section" id="bars">
+<div class="section-title">Bars proches</div>
+<div class="bars-list" id="barsList">
+<div class="empty">Chargement des bars...</div>
 </div>
 </div>
 
+<div class="section">
+<div class="promo">
+<h3>Samoussa du jour</h3>
+<strong>Poulet massalé</strong>
+<p>Découvre les meilleures adresses validées sur Samouss'App.</p>
+</div>
 </div>
 
-<button id="submitBtn" type="submit">Ajouter mon bar</button>
-<div id="formMessage" class="message"></div>
+<a class="add-link" href="ajouter.html">Ajouter mon bar à samoussas</a>
 
-</form>
+<div class="bottom-nav">
+<div class="nav-item active"><span>⌂</span>Accueil</div>
+<div class="nav-item"><span>⌕</span>Recherche</div>
+<div class="nav-item"><span>♡</span>Favoris</div>
+<div class="nav-item"><span>☻</span>Compte</div>
 </div>
 
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-
 const supabaseUrl = "https://ofbtvqnfcnzqptnzkkkq.supabase.co";
 const supabaseKey = "sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-const form = document.getElementById("barForm");
-const message = document.getElementById("formMessage");
-const submitBtn = document.getElementById("submitBtn");
-const presentation = document.getElementById("presentation");
-const count = document.getElementById("count");
-
-presentation.addEventListener("input", function(){
-count.textContent = this.value.length;
-});
-
-function createSlug(text){
-return text
-.toLowerCase()
-.normalize("NFD")
-.replace(/[\u0300-\u036f]/g,"")
-.replace(/[^a-z0-9]+/g,"-")
-.replace(/^-+|-+$/g,"");
-}
-
-form.addEventListener("submit", async function(e){
-e.preventDefault();
-
-message.className = "message loading";
-message.textContent = "Envoi en cours...";
-submitBtn.disabled = true;
-
-let types = [];
-document.querySelectorAll(".typeBox:checked").forEach(function(box){
-types.push(box.value);
-});
-
-if(types.length === 0){
-message.className = "message error";
-message.textContent = "Choisis au moins un type de samoussa.";
-submitBtn.disabled = false;
-return;
-}
-
-const nom = document.getElementById("nom").value.trim();
-
-const data = {
-NOM: nom,
-VILLE: document.getElementById("ville").value.trim(),
-ADRESSE: document.getElementById("adresse").value.trim(),
-TELEPHONE: document.getElementById("telephone").value.trim(),
-PRESENTATION: document.getElementById("presentation").value.trim(),
-TYPES: types.join(", "),
-PHOTOS: "",
-SLUG: createSlug(nom),
-STATUT: "en_attente"
-};
+async function loadBars(){
+const barsList = document.getElementById("barsList");
 
 const result = await supabaseClient
 .from("BARS")
-.insert([data]);
+.select("*")
+.eq("STATUT","valide")
+.order("created_at",{ascending:false});
 
 if(result.error){
-message.className = "message error";
-message.textContent = "Erreur : " + result.error.message;
-submitBtn.disabled = false;
+barsList.innerHTML = `<div class="empty">Erreur : ${result.error.message}</div>`;
 return;
 }
 
-message.className = "message ok";
-message.textContent = "Bar proposé avec succès 🔥 En attente de validation.";
-form.reset();
-count.textContent = "0";
-submitBtn.disabled = false;
-});
+if(result.data.length === 0){
+barsList.innerHTML = `<div class="empty">Aucun bar validé pour le moment.</div>`;
+return;
+}
 
+barsList.innerHTML = "";
+
+result.data.forEach(function(bar){
+let tags = "";
+
+if(bar.TYPES){
+bar.TYPES.split(",").slice(0,3).forEach(function(type){
+tags += `<span class="tag">${type.trim()}</span>`;
 });
+}
+
+const card = document.createElement("a");
+card.className = "bar-card";
+card.href = "bar.html?slug=" + bar.SLUG;
+
+card.innerHTML = `
+<div class="bar-img"><div class="open">Ouvert</div></div>
+<div class="bar-content">
+<div class="bar-title">${bar.NOM || ""}</div>
+<div class="rating">★ 4,8 · Nouveau</div>
+<div class="meta">${bar.VILLE || ""} · ${bar.ADRESSE || ""}</div>
+<div class="tags">${tags}</div>
+</div>
+`;
+
+barsList.appendChild(card);
+});
+}
+
+loadBars();
 </script>
 
 </body>
