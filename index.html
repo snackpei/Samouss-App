@@ -6,108 +6,179 @@
 <title>Samouss'App</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 font-family:Arial,sans-serif;
 background:linear-gradient(180deg,#fffaf2,#ffe8c2);
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
 color:#5c2d00;
-text-align:center;
-overflow:hidden;
+min-height:100vh;
+padding:25px;
 }
 
-.box{
-padding:35px;
-max-width:600px;
-animation:fadeIn 1.2s ease;
+.container{
+max-width:720px;
+margin:auto;
+text-align:center;
 }
 
 h1{
-font-size:52px;
-margin:0;
+font-size:44px;
 color:#ff8a00;
-font-weight:900;
-line-height:1.1;
-text-shadow:0 4px 12px rgba(255,138,0,.15);
+margin-bottom:10px;
 }
 
-p{
-font-size:20px;
-margin-top:18px;
+.subtitle{
+font-size:18px;
+margin-bottom:30px;
 color:#7a4a18;
 }
 
-.small{
-margin-top:14px;
+.form-box{
+background:white;
+border-radius:26px;
+padding:25px;
+box-shadow:0 15px 35px rgba(255,138,0,.18);
+text-align:left;
+}
+
+.form-box h2{
+text-align:center;
+margin-bottom:22px;
+color:#5c2d00;
+}
+
+label{
+display:block;
+font-weight:bold;
+margin:14px 0 6px;
+}
+
+input, textarea, select{
+width:100%;
+padding:14px;
+border:1px solid #ffd39b;
+border-radius:14px;
 font-size:15px;
-color:#9a6a3a;
+outline:none;
 }
 
-.wave{
-display:inline-block;
-animation:wave 1.8s infinite;
-transform-origin:70% 70%;
+textarea{
+min-height:90px;
+resize:none;
 }
 
-.dot{
-display:inline-block;
-margin-top:28px;
-width:14px;
-height:14px;
-border-radius:50%;
-background:#ff8a00;
-box-shadow:0 0 0 0 rgba(255,138,0,.5);
-animation:pulse 1.8s infinite;
+button{
+width:100%;
+margin-top:22px;
+padding:16px;
+border:none;
+border-radius:18px;
+background:linear-gradient(135deg,#ff7b00,#ffb347);
+color:white;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 10px 22px rgba(255,123,0,.25);
 }
 
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(20px);}
-to{opacity:1;transform:translateY(0);}
+button:hover{
+transform:scale(1.02);
 }
 
-@keyframes pulse{
-0%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,138,0,.5);}
-70%{transform:scale(1.2);box-shadow:0 0 0 18px rgba(255,138,0,0);}
-100%{transform:scale(1);}
+.success{
+display:none;
+margin-top:18px;
+padding:14px;
+background:#e9ffe8;
+border:1px solid #8bd884;
+border-radius:14px;
+color:#256b1f;
+text-align:center;
+font-weight:bold;
 }
 
-@keyframes wave{
-0%{transform:rotate(0deg);}
-15%{transform:rotate(14deg);}
-30%{transform:rotate(-8deg);}
-45%{transform:rotate(14deg);}
-60%{transform:rotate(-4deg);}
-75%{transform:rotate(10deg);}
-100%{transform:rotate(0deg);}
-}
-
-@media(max-width:600px){
-h1{
-font-size:40px;
-}
-p{
-font-size:18px;
-}
+.back{
+display:block;
+margin-top:22px;
+text-align:center;
+color:#ff7b00;
+font-weight:bold;
+text-decoration:none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-<h1>Bonjourrrraaaaaaan 👋</h1>
-<p>Bienvenue sur <strong>Samouss'App</strong></p>
-<div class="small">Le meilleur du samoussa arrive bientôt...</div>
-<div class="dot"></div>
+<div class="container">
+
+<h1>Bonjourrrraaaaaaan 🥟</h1>
+<p class="subtitle">Ajoute ton bar à samoussas sur Samouss'App</p>
+
+<div class="form-box">
+<h2>Formulaire d’ajout</h2>
+
+<form id="barForm">
+
+<label>Nom du bar à samoussas</label>
+<input type="text" id="nom" placeholder="Ex : Le Goût Péi" required>
+
+<label>Ville</label>
+<input type="text" id="ville" placeholder="Ex : Saint-Denis" required>
+
+<label>Adresse</label>
+<input type="text" id="adresse" placeholder="Ex : 12 rue des Samoussas" required>
+
+<label>Téléphone / WhatsApp</label>
+<input type="tel" id="telephone" placeholder="Ex : 0692 00 00 00" required>
+
+<label>Catégories proposées</label>
+<select id="categorie" required>
+<option value="">Choisir une catégorie principale</option>
+<option value="Végé">Végé</option>
+<option value="Poulet">Poulet</option>
+<option value="Porc">Porc</option>
+<option value="Mixte">Mixte</option>
+</select>
+
+<label>Description</label>
+<textarea id="description" placeholder="Ex : Samoussas chauds, faits maison, disponibles tous les jours."></textarea>
+
+<button type="submit">Ajouter mon bar</button>
+
+<div class="success" id="successMsg">
+Ton bar a bien été ajouté en attente de validation ✅
 </div>
+
+</form>
+</div>
+
+<a href="#" class="back">Retour à l’accueil</a>
+
+</div>
+
+<script>
+document.getElementById("barForm").addEventListener("submit", function(e){
+e.preventDefault();
+
+const bar = {
+nom: document.getElementById("nom").value,
+ville: document.getElementById("ville").value,
+adresse: document.getElementById("adresse").value,
+telephone: document.getElementById("telephone").value,
+categorie: document.getElementById("categorie").value,
+description: document.getElementById("description").value
+};
+
+let bars = JSON.parse(localStorage.getItem("barsSamoussApp")) || [];
+bars.push(bar);
+localStorage.setItem("barsSamoussApp", JSON.stringify(bars));
+
+document.getElementById("successMsg").style.display = "block";
+document.getElementById("barForm").reset();
+});
+</script>
 
 </body>
 </html>
