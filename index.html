@@ -125,48 +125,6 @@ font-size:13px;
 color:#7b644f;
 }
 
-.photo-zone{margin-top:26px}
-
-.upload-box{
-border:1.5px dashed #ffb06a;
-border-radius:10px;
-background:white;
-padding:22px;
-cursor:pointer;
-}
-
-.upload-title{
-font-weight:900;
-font-size:18px;
-margin-bottom:8px;
-}
-
-.upload-small{
-color:#6d5a47;
-font-size:14px;
-margin-bottom:18px;
-}
-
-.slots{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:14px;
-}
-
-.slot{
-height:82px;
-border:1.5px dashed #c9a581;
-border-radius:10px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-color:#a48363;
-background:#fffaf5;
-}
-
-#photos{display:none}
-
 button{
 width:100%;
 border:none;
@@ -204,7 +162,6 @@ h1{font-size:44px}
 .subtitle{font-size:20px}
 .top-grid,.middle-grid{grid-template-columns:1fr}
 .check-grid{grid-template-columns:1fr}
-.slots{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -231,12 +188,6 @@ h1{font-size:44px}
 <circle cx="92" cy="175" r="12" fill="#ff9b8c"/>
 <circle cx="208" cy="175" r="12" fill="#ff9b8c"/>
 <path d="M125 195 Q150 225 175 195" stroke="#5b1900" stroke-width="8" fill="none" stroke-linecap="round"/>
-<line x1="60" y1="175" x2="30" y2="150" stroke="#5b2a0d" stroke-width="10" stroke-linecap="round"/>
-<line x1="240" y1="175" x2="270" y2="155" stroke="#5b2a0d" stroke-width="10" stroke-linecap="round"/>
-<line x1="135" y1="225" x2="125" y2="265" stroke="#5b2a0d" stroke-width="10" stroke-linecap="round"/>
-<line x1="165" y1="225" x2="175" y2="265" stroke="#5b2a0d" stroke-width="10" stroke-linecap="round"/>
-<circle cx="125" cy="270" r="10" fill="#5b2a0d"/>
-<circle cx="175" cy="270" r="10" fill="#5b2a0d"/>
 </svg>
 </div>
 
@@ -296,25 +247,6 @@ h1{font-size:44px}
 
 </div>
 
-<div class="photo-zone">
-<label>Photos du commerce <span class="req">*</span></label>
-
-<label for="photos" class="upload-box">
-<div class="upload-title">Clique ici pour ajouter 5 photos minimum</div>
-<div class="upload-small">Devanture, vitrine, produits, ambiance...</div>
-
-<div class="slots">
-<div class="slot">+</div>
-<div class="slot">+</div>
-<div class="slot">+</div>
-<div class="slot">+</div>
-<div class="slot">+</div>
-</div>
-</label>
-
-<input type="file" id="photos" multiple accept="image/*">
-</div>
-
 <button type="submit">Ajouter mon bar</button>
 
 <div class="success" id="successMsg">
@@ -359,13 +291,6 @@ e.preventDefault();
 document.getElementById("successMsg").style.display = "none";
 document.getElementById("errorMsg").style.display = "none";
 
-const photos = document.getElementById("photos").files;
-
-if(photos.length < 5){
-alert("Il faut ajouter minimum 5 photos.");
-return;
-}
-
 let types = [];
 document.querySelectorAll(".typeBox:checked").forEach(box=>{
 types.push(box.value);
@@ -385,7 +310,7 @@ adresse: document.getElementById("adresse").value.trim(),
 telephone: document.getElementById("telephone").value.trim(),
 presentation: document.getElementById("presentation").value.trim(),
 types: types.join(", "),
-photos: Array.from(photos).map(file => file.name).join(", "),
+photos: "",
 slug: createSlug(nom),
 statut: "en_attente"
 };
