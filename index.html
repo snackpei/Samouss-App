@@ -10,142 +10,270 @@
 
 body{
 font-family:Arial,sans-serif;
-background:linear-gradient(180deg,#fffaf2,#ffe8c2);
-color:#5c2d00;
+background:linear-gradient(180deg,#fffaf2,#fff0dd);
+color:#5a2f12;
 min-height:100vh;
-padding:25px;
+padding:30px;
 }
 
 .container{
-max-width:720px;
+max-width:1180px;
 margin:auto;
 text-align:center;
 }
 
-.logo-samoussa{
-width:95px;
-height:82px;
-margin:0 auto 12px;
-filter:drop-shadow(0 10px 14px rgba(142,78,0,.22));
+.mascotte{
+width:150px;
+height:130px;
+margin:0 auto 5px;
+position:relative;
+filter:drop-shadow(0 10px 18px rgba(150,80,0,.25));
 }
 
-.logo-samoussa svg{
-width:100%;
-height:100%;
+.samoussa{
+width:0;
+height:0;
+border-left:75px solid transparent;
+border-right:75px solid transparent;
+border-bottom:125px solid #f5a12a;
+position:absolute;
+left:0;
+top:0;
+transform:rotate(0deg);
 }
+
+.samoussa::before{
+content:"";
+position:absolute;
+left:-58px;
+top:28px;
+width:115px;
+height:80px;
+background:radial-gradient(circle,#ffd27b,#f28a12);
+clip-path:polygon(50% 0%,100% 100%,0% 100%);
+opacity:.8;
+}
+
+.eye{
+position:absolute;
+top:62px;
+width:24px;
+height:30px;
+background:white;
+border-radius:50%;
+border:3px solid #4b230c;
+z-index:5;
+}
+
+.eye.left{left:48px;}
+.eye.right{right:48px;}
+
+.eye::after{
+content:"";
+position:absolute;
+width:10px;
+height:12px;
+background:#2d1608;
+border-radius:50%;
+top:8px;
+left:7px;
+}
+
+.mouth{
+position:absolute;
+top:92px;
+left:63px;
+width:25px;
+height:16px;
+background:#5b1900;
+border-radius:0 0 20px 20px;
+z-index:5;
+}
+
+.cheek{
+position:absolute;
+top:92px;
+width:18px;
+height:10px;
+background:#ff7b61;
+border-radius:50%;
+opacity:.7;
+z-index:5;
+}
+
+.cheek.left{left:35px;}
+.cheek.right{right:35px;}
 
 h1{
-font-size:44px;
-color:#ff7b00;
-margin-bottom:10px;
+font-size:72px;
 font-weight:900;
+color:#ff7300;
+line-height:1;
+margin-top:5px;
 }
 
 .subtitle{
-font-size:18px;
-margin-bottom:30px;
-color:#7a4a18;
+font-size:28px;
+margin:18px 0 35px;
+color:#6a3515;
+}
+
+.subtitle strong{
+font-weight:900;
 }
 
 .form-box{
-background:white;
-border-radius:26px;
-padding:25px;
-box-shadow:0 15px 35px rgba(255,138,0,.18);
+background:rgba(255,255,255,.9);
+border-radius:22px;
+padding:35px;
+box-shadow:0 18px 45px rgba(120,60,0,.12);
 text-align:left;
 }
 
 .form-box h2{
 text-align:center;
-margin-bottom:22px;
-color:#5c2d00;
+font-size:34px;
+margin-bottom:28px;
+color:#5a2f12;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:22px;
 }
 
 label{
-display:block;
 font-weight:bold;
-margin:14px 0 6px;
+display:block;
+margin-bottom:8px;
 }
 
 input, textarea{
 width:100%;
-padding:14px;
-border:1px solid #ffd39b;
-border-radius:14px;
+padding:15px;
+border:1px solid #ffb36b;
+border-radius:8px;
 font-size:15px;
+background:white;
 outline:none;
-background:#fffdf9;
 }
 
 textarea{
-min-height:110px;
+height:120px;
 resize:none;
+}
+
+.types-section{
+margin-top:26px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
+}
+
+.check-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+}
+
+.check-item{
+border:1px solid #ffb36b;
+border-radius:8px;
+padding:15px;
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:bold;
+background:white;
+}
+
+.check-item input{
+width:auto;
 }
 
 .counter{
 text-align:right;
 font-size:13px;
-color:#9a6a3a;
-margin-top:6px;
+color:#7a5a40;
+margin-top:-22px;
+padding-right:12px;
 }
 
-.check-group{
-margin-top:10px;
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px;
+.photo-zone{
+margin-top:28px;
 }
 
-.check-item{
-background:#fff7eb;
-border:1px solid #ffd39b;
-padding:12px;
-border-radius:14px;
+.upload-box{
+border:1px dashed #ff9d45;
+border-radius:10px;
+padding:25px;
 display:flex;
 align-items:center;
-gap:10px;
+justify-content:space-between;
+gap:20px;
+background:white;
+}
+
+.upload-text{
 font-weight:bold;
 }
 
-.check-item input{
-width:auto;
-transform:scale(1.2);
+.upload-text small{
+display:block;
+font-weight:normal;
+margin-top:8px;
+color:#7a5a40;
 }
 
-.helper{
-font-size:13px;
-color:#9a6a3a;
-margin-top:6px;
+.photo-slots{
+display:flex;
+gap:16px;
+}
+
+.slot{
+width:75px;
+height:75px;
+border:1px dashed #caa37e;
+border-radius:8px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+color:#a9825f;
 }
 
 button{
 width:100%;
-margin-top:22px;
-padding:16px;
+margin-top:24px;
+padding:18px;
 border:none;
-border-radius:18px;
-background:linear-gradient(135deg,#ff7b00,#ffb347);
+border-radius:8px;
+background:linear-gradient(180deg,#ff8a00,#ff5a00);
 color:white;
-font-size:17px;
-font-weight:bold;
+font-size:24px;
+font-weight:900;
 cursor:pointer;
 }
 
 .success{
 display:none;
 margin-top:18px;
-padding:14px;
-background:#e9ffe8;
-border:1px solid #8bd884;
-border-radius:14px;
-color:#256b1f;
+padding:15px;
+border-radius:10px;
+background:#e8ffe8;
+color:#1f6b1f;
 text-align:center;
 font-weight:bold;
 }
 
-@media(max-width:600px){
-.check-group{grid-template-columns:1fr;}
-h1{font-size:36px;}
+@media(max-width:900px){
+h1{font-size:44px;}
+.subtitle{font-size:20px;}
+.form-grid,.types-section{grid-template-columns:1fr;}
+.check-grid{grid-template-columns:1fr;}
+.upload-box{flex-direction:column;align-items:flex-start;}
+.photo-slots{flex-wrap:wrap;}
 }
 </style>
 </head>
@@ -154,18 +282,13 @@ h1{font-size:36px;}
 
 <div class="container">
 
-<div class="logo-samoussa">
-<svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
-<stop offset="0%" stop-color="#ffd36a"/>
-<stop offset="45%" stop-color="#f28a12"/>
-<stop offset="100%" stop-color="#b84b00"/>
-</linearGradient>
-</defs>
-<path d="M60 8 C72 29 91 57 108 87 C75 89 42 89 12 87 C29 57 48 29 60 8Z"
-fill="url(#gold)" stroke="#8f3a00" stroke-width="3"/>
-</svg>
+<div class="mascotte">
+<div class="samoussa"></div>
+<div class="eye left"></div>
+<div class="eye right"></div>
+<div class="cheek left"></div>
+<div class="cheek right"></div>
+<div class="mouth"></div>
 </div>
 
 <h1>Bonjourrrraaaaaaan</h1>
@@ -176,20 +299,33 @@ fill="url(#gold)" stroke="#8f3a00" stroke-width="3"/>
 
 <form id="barForm">
 
-<label>Nom du bar à samoussas</label>
-<input type="text" id="nom" required>
+<div class="form-grid">
+<div>
+<label>Nom du bar à samoussas *</label>
+<input type="text" id="nom" placeholder="Ex : Le Goût Péi" required>
+</div>
 
-<label>Ville</label>
-<input type="text" id="ville" required>
+<div>
+<label>Ville *</label>
+<input type="text" id="ville" placeholder="Ex : Saint-Denis" required>
+</div>
 
-<label>Adresse</label>
-<input type="text" id="adresse" required>
+<div>
+<label>Adresse *</label>
+<input type="text" id="adresse" placeholder="Ex : 12 rue des Samoussas" required>
+</div>
 
-<label>Téléphone / WhatsApp</label>
-<input type="tel" id="telephone" required>
+<div>
+<label>Téléphone / WhatsApp *</label>
+<input type="tel" id="telephone" placeholder="Ex : 0692 00 00 00" required>
+</div>
+</div>
 
-<label>Types de samoussas proposés</label>
-<div class="check-group">
+<div class="types-section">
+
+<div>
+<label>Types de samoussas proposés *</label>
+<div class="check-grid">
 <label class="check-item"><input type="checkbox" value="Poulet" class="typeBox"> Poulet</label>
 <label class="check-item"><input type="checkbox" value="Porc" class="typeBox"> Porc</label>
 <label class="check-item"><input type="checkbox" value="Végé" class="typeBox"> Végé</label>
@@ -197,14 +333,36 @@ fill="url(#gold)" stroke="#8f3a00" stroke-width="3"/>
 <label class="check-item"><input type="checkbox" value="Bœuf" class="typeBox"> Bœuf</label>
 <label class="check-item"><input type="checkbox" value="Spéciaux" class="typeBox"> Spéciaux</label>
 </div>
+</div>
 
-<label>Présentation du commerce</label>
-<textarea id="presentation" maxlength="500" placeholder="500 caractères maximum"></textarea>
-<div class="counter"><span id="count">0</span>/500</div>
+<div>
+<label>Présentation du commerce <span style="font-weight:normal;">(500 caractères max)</span> *</label>
+<textarea id="presentation" maxlength="500" placeholder="Présente ton commerce : spécialités, ambiance, horaires, savoir-faire, produits maison..." required></textarea>
+<div class="counter"><span id="count">0</span> / 500</div>
+</div>
 
-<label>Photos du commerce et des produits</label>
-<input type="file" id="photos" accept="image/*" multiple>
-<div class="helper">Maximum 5 photos</div>
+</div>
+
+<div class="photo-zone">
+<label>Photos du commerce et des produits *</label>
+
+<div class="upload-box">
+<div>
+<div class="upload-text">Clique pour ajouter des photos ou glisse-dépose ici</div>
+<small>Jusqu’à 5 photos maximum : devanture, vitrine, produits, ambiance...</small>
+</div>
+
+<div class="photo-slots">
+<div class="slot">＋</div>
+<div class="slot">＋</div>
+<div class="slot">＋</div>
+<div class="slot">＋</div>
+<div class="slot">＋</div>
+</div>
+</div>
+
+<input type="file" id="photos" accept="image/*" multiple style="margin-top:12px;">
+</div>
 
 <button type="submit">Ajouter mon bar</button>
 
@@ -228,10 +386,36 @@ count.textContent = this.value.length;
 document.getElementById("barForm").addEventListener("submit", function(e){
 e.preventDefault();
 
-if(document.getElementById("photos").files.length > 5){
+const photoFiles = document.getElementById("photos").files;
+
+if(photoFiles.length > 5){
 alert("Maximum 5 photos.");
 return;
 }
+
+let types = [];
+document.querySelectorAll(".typeBox:checked").forEach(box=>{
+types.push(box.value);
+});
+
+if(types.length === 0){
+alert("Choisis au moins un type de samoussa.");
+return;
+}
+
+const bar = {
+nom: document.getElementById("nom").value,
+ville: document.getElementById("ville").value,
+adresse: document.getElementById("adresse").value,
+telephone: document.getElementById("telephone").value,
+types: types,
+presentation: document.getElementById("presentation").value,
+nombrePhotos: photoFiles.length
+};
+
+let bars = JSON.parse(localStorage.getItem("barsSamoussApp")) || [];
+bars.push(bar);
+localStorage.setItem("barsSamoussApp", JSON.stringify(bars));
 
 document.getElementById("successMsg").style.display = "block";
 this.reset();
