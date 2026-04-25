@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samouss'App - Bar</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#fff3df;
+color:#4b250c;
+padding:25px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+.card{
+background:white;
+border-radius:24px;
+padding:30px;
+box-shadow:0 15px 35px rgba(120,60,0,.15);
+}
+
+h1{
+font-size:42px;
+color:#ff7300;
+margin-bottom:10px;
+}
+
+.badge{
+display:inline-block;
+background:#fff0dc;
+border:1px solid #ff9b45;
+color:#ff7300;
+padding:8px 14px;
+border-radius:999px;
+font-weight:bold;
+margin:8px 6px 8px 0;
+}
+
+.info{
+font-size:18px;
+margin:14px 0;
+}
+
+.actions{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+margin-top:25px;
+}
+
+a{
+text-decoration:none;
+}
+
+.btn{
+display:inline-block;
+background:#ff7300;
+color:white;
+padding:14px 20px;
+border-radius:12px;
+font-weight:bold;
+}
+
+.btn.secondary{
+background:#5a2b0c;
+}
+
+.error{
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#9b1c1c;
+margin-top:80px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="content">
+Chargement...
+</div>
+
+<script>
+const supabaseUrl = "https://ofbtvqnfcnzqptnzkkkq.supabase.co";
+const supabaseKey = "sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
+
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+function getSlug(){
+const params = new URLSearchParams(window.location.search);
+return params.get("slug");
+}
+
+async function loadBar(){
+const content = document.getElementById("content");
+const slug = getSlug();
+
+if(!slug){
+content.innerHTML = '<div class="error">Aucun bar sélectionné.</div>';
+return;
+}
+
+const result = await supabaseClient
+.from("BARS")
+.select("*")
+.eq("SLUG", slug)
+.eq("STATUT", "valide")
+.single();
+
+if(result.error || !result.data){
+content.innerHTML = '<div class="error">Ce bar n’est pas encore disponible ou n’a pas été validé.</div>';
+return;
+}
+
+const bar = result.data;
+
+let types = "";
+if(bar.TYPES){
+bar.TYPES.split(",").forEach(function(type){
+types += `<span class="badge">${type.trim()}</span>`;
+});
+}
+
+content.innerHTML = `
+<div class="card">
+<h1>${bar.NOM}</h1>
+
+<div>${types}</div>
+
+<div class="info"><strong>Ville :</strong> ${bar.VILLE || ""}</div>
+<div class="info"><strong>Adresse :</strong> ${bar.ADRESSE || ""}</div>
+<div class="info"><strong>Téléphone :</strong> ${bar.TELEPHONE || ""}</div>
+
+<div class="info">
+<strong>Présentation :</strong><br>
+${bar.PRESENTATION || ""}
+</div>
+
+<div class="actions">
+<a class="btn" href="tel:${bar.TELEPHONE}">Appeler</a>
+<a class="btn secondary" target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((bar.ADRESSE || "") + " " + (bar.VILLE || "") + " La Réunion")}">Itinéraire</a>
+<a class="btn secondary" href="index.html">Retour</a>
+</div>
+</div>
+`;
+}
+
+loadBar();
+</script>
+
+</body>
+</html>
