@@ -13,7 +13,7 @@
 body{
 font-family:Arial,sans-serif;
 background:linear-gradient(180deg,#fff8ef,#ffe8cf);
-color:#2b1608;
+color:#241006;
 padding-bottom:90px;
 }
 
@@ -23,6 +23,7 @@ margin:auto;
 min-height:100vh;
 background:#fffaf3;
 position:relative;
+overflow:hidden;
 }
 
 .header{
@@ -37,11 +38,11 @@ z-index:20;
 }
 
 .menu-btn{
-font-size:34px;
+font-size:38px;
 font-weight:900;
 cursor:pointer;
 line-height:1;
-padding:6px 10px;
+padding:4px 10px;
 border-radius:12px;
 }
 
@@ -68,52 +69,54 @@ font-weight:900;
 border-bottom:1px solid #ffe0bf;
 }
 
-.menu-panel a:last-child{
-border-bottom:none;
-}
+.menu-panel a:last-child{border-bottom:none}
 
 .hero{
 margin:0 18px;
-border-radius:28px;
+border-radius:30px;
 padding:28px 22px;
-min-height:330px;
+min-height:360px;
 background:
-linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,115,0,.25)),
+linear-gradient(90deg,rgba(255,250,243,.95) 0%,rgba(255,250,243,.72) 42%,rgba(255,255,255,.05) 100%),
 url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80");
 background-size:cover;
-background-position:center;
+background-position:center right;
 position:relative;
 overflow:hidden;
 box-shadow:0 18px 35px rgba(130,70,0,.18);
 }
 
 .hero h1{
-font-size:34px;
+font-size:36px;
 line-height:1.05;
-max-width:280px;
+max-width:300px;
+font-weight:900;
 }
 
 .hero h1 span{
-color:#ff5a00;
+color:#f45a00;
 font-style:italic;
+font-size:44px;
 }
 
 .hero p{
 margin-top:14px;
-font-size:15px;
+font-size:16px;
 max-width:260px;
 font-weight:700;
+line-height:1.5;
 }
 
 .cta{
 display:inline-block;
 margin-top:20px;
-background:#ff6a00;
+background:linear-gradient(180deg,#ff8a00,#ff5a00);
 color:white;
 padding:14px 18px;
 border-radius:14px;
 font-weight:900;
 text-decoration:none;
+box-shadow:0 10px 20px rgba(255,90,0,.25);
 }
 
 .hot-card{
@@ -121,20 +124,38 @@ position:absolute;
 left:18px;
 right:18px;
 bottom:18px;
-background:rgba(255,255,255,.92);
+background:rgba(255,255,255,.95);
 border-radius:22px;
 padding:14px;
 font-weight:900;
+box-shadow:0 10px 24px rgba(130,70,0,.18);
 }
 
 .section{
-padding:22px 18px 0;
+margin:18px;
+padding:18px;
+background:rgba(255,255,255,.86);
+border-radius:26px;
+box-shadow:0 10px 24px rgba(130,70,0,.10);
+}
+
+.section-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:14px;
 }
 
 .section-title{
 font-size:24px;
 font-weight:900;
-margin-bottom:14px;
+}
+
+.see-all{
+color:#ff5a00;
+font-weight:900;
+text-decoration:none;
+font-size:14px;
 }
 
 .categories{
@@ -144,27 +165,51 @@ gap:12px;
 }
 
 .category{
-background:white;
-border-radius:20px;
-padding:16px 10px;
-text-align:center;
-box-shadow:0 8px 20px rgba(130,70,0,.10);
+background:#fffaf3;
+border-radius:18px;
+padding:10px;
+text-align:left;
+box-shadow:0 8px 18px rgba(130,70,0,.08);
 border:1px solid #ffe0bf;
 font-weight:900;
 text-decoration:none;
 color:#2b1608;
+min-height:112px;
+position:relative;
+overflow:hidden;
+}
+
+.category::after{
+content:"";
+position:absolute;
+right:-10px;
+bottom:-10px;
+width:80px;
+height:58px;
+background:url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=250&q=80");
+background-size:cover;
+background-position:center;
+border-radius:16px;
+opacity:.9;
 }
 
 .cat-icon{
-width:46px;
-height:46px;
+width:38px;
+height:38px;
 border-radius:50%;
-margin:0 auto 8px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:23px;
+font-size:19px;
 color:white;
+margin-bottom:20px;
+position:relative;
+z-index:2;
+}
+
+.category span{
+position:relative;
+z-index:2;
 }
 
 .green{background:#7bbf2a}
@@ -176,27 +221,29 @@ color:white;
 
 .bars-list{
 display:flex;
-flex-direction:column;
 gap:14px;
+overflow-x:auto;
+padding-bottom:4px;
+scroll-snap-type:x mandatory;
 }
 
 .bar-card{
 background:white;
-border-radius:24px;
+border-radius:22px;
 overflow:hidden;
-display:grid;
-grid-template-columns:130px 1fr;
+min-width:260px;
 box-shadow:0 10px 24px rgba(130,70,0,.12);
 border:1px solid #ffe0bf;
 text-decoration:none;
 color:#2b1608;
+scroll-snap-align:start;
 }
 
 .bar-img{
-background:url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80");
+background:url("https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=500&q=80");
 background-size:cover;
 background-position:center;
-min-height:120px;
+height:135px;
 position:relative;
 }
 
@@ -209,6 +256,20 @@ color:#218b25;
 padding:5px 9px;
 border-radius:999px;
 font-size:12px;
+font-weight:900;
+}
+
+.heart{
+position:absolute;
+top:10px;
+right:10px;
+background:rgba(255,255,255,.9);
+width:34px;
+height:34px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
 font-weight:900;
 }
 
@@ -251,17 +312,58 @@ padding:4px 7px;
 font-weight:900;
 }
 
+.promo-grid{
+display:grid;
+grid-template-columns:1fr;
+gap:14px;
+}
+
+.promo-card{
+border-radius:22px;
+background:
+linear-gradient(90deg,rgba(255,255,255,.96),rgba(255,240,220,.78)),
+url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=80");
+background-size:cover;
+background-position:center right;
+padding:18px;
+min-height:160px;
+box-shadow:0 10px 24px rgba(130,70,0,.10);
+}
+
+.promo-card h3{
+color:#ff5a00;
+font-size:18px;
+margin-bottom:8px;
+}
+
+.promo-card strong{
+font-size:30px;
+display:block;
+margin-bottom:12px;
+}
+
+.small-btn{
+display:inline-block;
+background:#ff6a00;
+color:white;
+padding:11px 16px;
+border-radius:12px;
+font-weight:900;
+text-decoration:none;
+}
+
 .empty{
 background:white;
 border-radius:20px;
 padding:20px;
 text-align:center;
 color:#7b5a40;
+min-width:100%;
 }
 
 .add-link{
 display:block;
-margin:22px 18px 0;
+margin:18px;
 background:#5a2b0c;
 color:white;
 text-align:center;
@@ -305,8 +407,7 @@ margin-bottom:4px;
 
 @media(max-width:520px){
 .app{max-width:100%}
-.hero{min-height:310px}
-.bar-card{grid-template-columns:115px 1fr}
+.hero{min-height:340px}
 }
 </style>
 </head>
@@ -332,27 +433,53 @@ margin-bottom:4px;
 <div class="hero">
 <h1>Envie d’un <span>samoussa</span> aujourd’hui ?</h1>
 <p>Les meilleurs bars à samoussas près de chez toi.</p>
-<a href="#bars" class="cta">Voir les bars autour de moi</a>
+<a href="#bars" class="cta">Voir les bars autour de moi ↗</a>
 <div class="hot-card">Encore chaud ? Goûte le péi !</div>
 </div>
 
 <div class="section">
+<div class="section-head">
 <div class="section-title">Catégories</div>
+<a class="see-all" href="categorie.html">Voir tout</a>
+</div>
 
 <div class="categories">
-<a class="category" href="categorie.html?type=Végé"><div class="cat-icon green">🌿</div>Végé</a>
-<a class="category" href="categorie.html?type=Poulet"><div class="cat-icon orange">🐔</div>Poulet</a>
-<a class="category" href="categorie.html?type=Porc"><div class="cat-icon red">🐷</div>Porc</a>
-<a class="category" href="categorie.html?type=Halal"><div class="cat-icon gold">☪</div>Halal</a>
-<a class="category" href="categorie.html?type=Bœuf"><div class="cat-icon brown">🐂</div>Bœuf</a>
-<a class="category" href="categorie.html?type=Spéciaux"><div class="cat-icon pink">⭐</div>Spéciaux</a>
+<a class="category" href="categorie.html?type=Végé"><div class="cat-icon green">🌿</div><span>Végé</span></a>
+<a class="category" href="categorie.html?type=Poulet"><div class="cat-icon orange">🐔</div><span>Poulet</span></a>
+<a class="category" href="categorie.html?type=Porc"><div class="cat-icon red">🐷</div><span>Porc</span></a>
+<a class="category" href="categorie.html?type=Halal"><div class="cat-icon gold">☪</div><span>Halal</span></a>
+<a class="category" href="categorie.html?type=Bœuf"><div class="cat-icon brown">🐂</div><span>Bœuf</span></a>
+<a class="category" href="categorie.html?type=Spéciaux"><div class="cat-icon pink">⭐</div><span>Spéciaux</span></a>
 </div>
 </div>
 
 <div class="section" id="bars">
+<div class="section-head">
+<div>
 <div class="section-title">Bars proches</div>
+<div class="meta">Les meilleurs samoussas près de toi</div>
+</div>
+<a class="see-all" href="carte.html">Voir tout</a>
+</div>
+
 <div class="bars-list" id="barsList">
 <div class="empty">Chargement des bars...</div>
+</div>
+</div>
+
+<div class="section">
+<div class="promo-grid">
+<div class="promo-card">
+<h3>Samoussa du jour</h3>
+<strong>Poulet Massalé</strong>
+<a href="#bars" class="small-btn">Découvrir</a>
+</div>
+
+<div class="promo-card">
+<h3>Promo du week-end</h3>
+<strong>-10% sur tout</strong>
+<a href="#bars" class="small-btn">J’en profite</a>
+</div>
 </div>
 </div>
 
@@ -412,7 +539,7 @@ card.className = "bar-card";
 card.href = "bar.html?slug=" + bar.SLUG;
 
 card.innerHTML = `
-<div class="bar-img"><div class="open">Ouvert</div></div>
+<div class="bar-img"><div class="open">Ouvert</div><div class="heart">♡</div></div>
 <div class="bar-content">
 <div class="bar-title">${bar.NOM || ""}</div>
 <div class="rating">★ 4,8 · Nouveau</div>
