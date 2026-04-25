@@ -26,7 +26,6 @@ text-align:center;
 width:95px;
 height:82px;
 margin:0 auto 12px;
-position:relative;
 filter:drop-shadow(0 10px 14px rgba(142,78,0,.22));
 }
 
@@ -83,6 +82,31 @@ min-height:90px;
 resize:none;
 }
 
+.check-group{
+margin-top:10px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.check-item{
+background:#fff7eb;
+border:1px solid #ffd39b;
+padding:12px;
+border-radius:14px;
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:bold;
+}
+
+.check-item input{
+width:auto;
+padding:0;
+margin:0;
+transform:scale(1.2);
+}
+
 button{
 width:100%;
 margin-top:22px;
@@ -127,6 +151,12 @@ font-size:15px;
 margin-top:10px;
 color:#9a6a3a;
 }
+
+@media(max-width:600px){
+.check-group{
+grid-template-columns:1fr;
+}
+}
 </style>
 </head>
 
@@ -142,24 +172,10 @@ color:#9a6a3a;
 <stop offset="45%" stop-color="#f28a12"/>
 <stop offset="100%" stop-color="#b84b00"/>
 </linearGradient>
-<radialGradient id="shine" cx="35%" cy="25%" r="60%">
-<stop offset="0%" stop-color="#fff1b8" stop-opacity="0.9"/>
-<stop offset="55%" stop-color="#ffb347" stop-opacity="0.35"/>
-<stop offset="100%" stop-color="#a74300" stop-opacity="0"/>
-</radialGradient>
 </defs>
 
 <path d="M60 8 C72 29 91 57 108 87 C75 89 42 89 12 87 C29 57 48 29 60 8Z"
 fill="url(#gold)" stroke="#8f3a00" stroke-width="3"/>
-
-<path d="M60 8 C72 29 91 57 108 87 C75 89 42 89 12 87 C29 57 48 29 60 8Z"
-fill="url(#shine)"/>
-
-<path d="M28 78 C48 67 73 66 94 78" fill="none" stroke="#7a2f00" stroke-width="3" opacity=".45"/>
-
-<circle cx="55" cy="43" r="3" fill="#9c3d00" opacity=".45"/>
-<circle cx="69" cy="57" r="2.6" fill="#9c3d00" opacity=".38"/>
-<circle cx="45" cy="63" r="2.2" fill="#9c3d00" opacity=".32"/>
 </svg>
 </div>
 
@@ -183,6 +199,32 @@ fill="url(#shine)"/>
 <label>Téléphone / WhatsApp</label>
 <input type="tel" id="telephone" placeholder="Ex : 0692 00 00 00" required>
 
+<label>Types de samoussas proposés</label>
+
+<div class="check-group">
+
+<label class="check-item">
+<input type="checkbox" value="Poulet" class="typeBox">
+Poulet
+</label>
+
+<label class="check-item">
+<input type="checkbox" value="Porc" class="typeBox">
+Porc
+</label>
+
+<label class="check-item">
+<input type="checkbox" value="Végé" class="typeBox">
+Végé
+</label>
+
+<label class="check-item">
+<input type="checkbox" value="Halal" class="typeBox">
+Halal
+</label>
+
+</div>
+
 <label>Description</label>
 <textarea id="description" placeholder="Ex : Samoussas chauds, faits maison, disponibles tous les jours."></textarea>
 
@@ -204,11 +246,17 @@ Ton bar a bien été ajouté en attente de validation ✅
 document.getElementById("barForm").addEventListener("submit", function(e){
 e.preventDefault();
 
+let types = [];
+document.querySelectorAll(".typeBox:checked").forEach(box=>{
+types.push(box.value);
+});
+
 const bar = {
 nom: document.getElementById("nom").value,
 ville: document.getElementById("ville").value,
 adresse: document.getElementById("adresse").value,
 telephone: document.getElementById("telephone").value,
+types: types,
 description: document.getElementById("description").value
 };
 
