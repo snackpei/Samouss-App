@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catégorie - Samouss'App</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:Arial,sans-serif;
+background:linear-gradient(180deg,#fff8ef,#ffe8cf);
+color:#2b1608;
+padding-bottom:90px;
+}
+
+.app{
+max-width:520px;
+margin:auto;
+min-height:100vh;
+background:#fffaf3;
+}
+
+.header{
+padding:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-weight:900;
+color:#9b3f00;
+}
+
+.header a{
+text-decoration:none;
+color:#9b3f00;
+font-size:30px;
+}
+
+.title{
+padding:10px 18px 20px;
+font-size:30px;
+font-weight:900;
+color:#ff7300;
+}
+
+.bars-list{
+padding:0 18px;
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.bar-card{
+background:white;
+border-radius:24px;
+overflow:hidden;
+display:grid;
+grid-template-columns:120px 1fr;
+box-shadow:0 10px 24px rgba(130,70,0,.12);
+border:1px solid #ffe0bf;
+text-decoration:none;
+color:#2b1608;
+}
+
+.bar-img{
+background:url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80");
+background-size:cover;
+background-position:center;
+min-height:120px;
+}
+
+.bar-content{
+padding:14px;
+}
+
+.bar-title{
+font-size:17px;
+font-weight:900;
+margin-bottom:7px;
+}
+
+.rating{
+font-size:13px;
+color:#ff8a00;
+font-weight:900;
+margin-bottom:7px;
+}
+
+.meta{
+font-size:13px;
+color:#6d5a47;
+margin-bottom:7px;
+}
+
+.tag{
+font-size:11px;
+background:#fff1df;
+border:1px solid #ffb06a;
+color:#d85d00;
+border-radius:999px;
+padding:4px 7px;
+font-weight:900;
+display:inline-block;
+margin:3px;
+}
+
+.empty{
+margin:0 18px;
+background:white;
+border-radius:20px;
+padding:20px;
+text-align:center;
+color:#7b5a40;
+}
+
+.bottom-nav{
+position:fixed;
+left:50%;
+bottom:0;
+transform:translateX(-50%);
+width:100%;
+max-width:520px;
+background:white;
+border-radius:28px 28px 0 0;
+box-shadow:0 -8px 25px rgba(0,0,0,.08);
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:12px 5px;
+z-index:10;
+}
+
+.nav-item{
+text-align:center;
+font-size:12px;
+color:#6b5140;
+font-weight:700;
+text-decoration:none;
+}
+
+.nav-item span{
+display:block;
+font-size:24px;
+margin-bottom:4px;
+}
+
+.active{color:#ff7300}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="header">
+<a href="index.html">‹</a>
+<div>Samouss'App</div>
+<div>♡</div>
+</div>
+
+<div class="title" id="title">Catégorie</div>
+
+<div class="bars-list" id="barsList">
+<div class="empty">Chargement...</div>
+</div>
+
+<div class="bottom-nav">
+<a class="nav-item" href="index.html"><span>⌂</span>Accueil</a>
+<a class="nav-item" href="carte.html"><span>⌕</span>Carte</a>
+<a class="nav-item" href="ajouter.html"><span>＋</span>Ajouter</a>
+<a class="nav-item active" href="classement.html"><span>★</span>Top</a>
+</div>
+
+</div>
+
+<script>
+const supabaseUrl = "https://ofbtvqnfcnzqptnzkkkq.supabase.co";
+const supabaseKey = "sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+const params = new URLSearchParams(window.location.search);
+const type = params.get("type") || "";
+
+document.getElementById("title").textContent = type ? "Samoussas " + type : "Catégorie";
+
+async function loadCategory(){
+const barsList = document.getElementById("barsList");
+
+const result = await supabaseClient
+.from("BARS")
+.select("*")
+.eq("STATUT","valide")
+.ilike("TYPES","%" + type + "%")
+.order("created_at",{ascending:false});
+
+if(result.error){
+barsList.innerHTML = `<div class="empty">Erreur : ${result.error.message}</div>`;
+return;
+}
+
+if(result.data.length === 0){
+barsList.innerHTML = `<div class="empty">Aucun bar trouvé dans cette catégorie.</div>`;
+return;
+}
+
+barsList.innerHTML = "";
+
+result.data.forEach(function(bar){
+let tags = "";
+
+if(bar.TYPES){
+bar.TYPES.split(",").forEach(function(t){
+tags += `<span class="tag">${t.trim()}</span>`;
+});
+}
+
+const card = document.createElement("a");
+card.className = "bar-card";
+card.href = "bar.html?slug=" + bar.SLUG;
+
+card.innerHTML = `
+<div class="bar-img"></div>
+<div class="bar-content">
+<div class="bar-title">${bar.NOM || ""}</div>
+<div class="rating">★ 4,8 · Nouveau</div>
+<div class="meta">${bar.VILLE || ""} · ${bar.ADRESSE || ""}</div>
+<div>${tags}</div>
+</div>
+`;
+
+barsList.appendChild(card);
+});
+}
+
+loadCategory();
+</script>
+
+</body>
+</html>
