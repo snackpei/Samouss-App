@@ -228,8 +228,23 @@ L.marker(coords)
 .addTo(map)
 .bindPopup(`
 <strong>${bar.NOM || "Bar à samoussas"}</strong><br>
-${bar.VILLE || ""}<br>
-<a href="bar.html?slug=${bar.SLUG}">Voir la fiche</a>
+${bar.VILLE || ""}<br><br>
+
+<a href="bar.html?slug=${bar.SLUG}" style="display:block;margin-bottom:8px;">
+📄 Voir la fiche
+</a>
+
+<a target="_blank"
+href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((bar.ADRESSE || "") + " " + (bar.VILLE || "") + " La Réunion")}"
+style="display:block;margin-bottom:8px;">
+🗺️ Google Maps
+</a>
+
+<a target="_blank"
+href="https://waze.com/ul?q=${encodeURIComponent((bar.ADRESSE || "") + " " + (bar.VILLE || "") + " La Réunion")}&navigate=yes"
+style="display:block;">
+🚗 Waze
+</a>
 `);
 
 const card = document.createElement("a");
