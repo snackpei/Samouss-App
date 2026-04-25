@@ -6,7 +6,11 @@
 <title>Samouss'App</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
 font-family:Arial,sans-serif;
@@ -23,13 +27,20 @@ text-align:center;
 }
 
 .logo{
-width:170px;
+width:180px;
 margin:auto;
+animation:floaty 3s ease-in-out infinite;
 }
 
-.logo img{
+.logo svg{
 width:100%;
+height:auto;
 display:block;
+}
+
+@keyframes floaty{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-8px);}
 }
 
 h1{
@@ -37,7 +48,7 @@ font-size:82px;
 line-height:1;
 color:#ff7300;
 font-weight:900;
-margin-top:-5px;
+margin-top:5px;
 }
 
 .subtitle{
@@ -53,7 +64,7 @@ font-weight:900;
 .form-box{
 background:rgba(255,255,255,.88);
 border-radius:22px;
-padding:34px 34px 28px;
+padding:34px;
 box-shadow:0 20px 55px rgba(115,65,20,.13);
 text-align:left;
 }
@@ -82,24 +93,11 @@ margin-bottom:9px;
 color:#ff6500;
 }
 
-.input-wrap{
-position:relative;
-}
-
-.icon{
-position:absolute;
-left:14px;
-top:50%;
-transform:translateY(-50%);
-color:#9a5b25;
-font-size:18px;
-}
-
 input,textarea{
 width:100%;
 border:1.5px solid #ffb06a;
 border-radius:8px;
-padding:14px 14px 14px 46px;
+padding:14px;
 font-size:15px;
 background:white;
 outline:none;
@@ -109,8 +107,6 @@ color:#5a2b0c;
 textarea{
 height:126px;
 resize:none;
-padding:16px;
-line-height:1.5;
 }
 
 .middle-grid{
@@ -130,7 +126,7 @@ gap:12px;
 border:1.5px solid #ffb06a;
 border-radius:8px;
 background:white;
-padding:15px 14px;
+padding:15px;
 display:flex;
 align-items:center;
 gap:10px;
@@ -141,7 +137,6 @@ font-size:16px;
 .check-item input{
 width:17px;
 height:17px;
-padding:0;
 accent-color:#ff7300;
 }
 
@@ -166,55 +161,8 @@ border:1.5px dashed #ffb06a;
 border-radius:10px;
 background:white;
 padding:22px 26px;
-display:grid;
-grid-template-columns:1.3fr 1fr;
-align-items:center;
-gap:22px;
+text-align:center;
 cursor:pointer;
-}
-
-.upload-left{
-display:flex;
-align-items:center;
-gap:20px;
-}
-
-.big-icon{
-font-size:34px;
-color:#ff7300;
-}
-
-.upload-title{
-font-weight:900;
-font-size:16px;
-margin-bottom:8px;
-}
-
-.upload-small{
-font-size:14px;
-color:#6d5a47;
-}
-
-.slots{
-display:flex;
-justify-content:space-between;
-gap:14px;
-}
-
-.slot{
-width:76px;
-height:76px;
-border:1.5px dashed #c9a581;
-border-radius:8px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-color:#a48363;
-}
-
-#photos{
-display:none;
 }
 
 button{
@@ -228,7 +176,6 @@ font-weight:900;
 color:white;
 background:linear-gradient(180deg,#ff8a00,#ff5a00);
 cursor:pointer;
-box-shadow:0 10px 20px rgba(255,100,0,.2);
 }
 
 .success{
@@ -247,8 +194,6 @@ h1{font-size:44px;}
 .subtitle{font-size:20px;}
 .top-grid,.middle-grid{grid-template-columns:1fr;}
 .check-grid{grid-template-columns:1fr;}
-.upload-box{grid-template-columns:1fr;}
-.slots{flex-wrap:wrap;justify-content:flex-start;}
 }
 </style>
 </head>
@@ -258,7 +203,44 @@ h1{font-size:44px;}
 <div class="container">
 
 <div class="logo">
-<img src="a_clean_simple_illustration_3d_render_style_scene.png" alt="Logo Samouss'App">
+<svg viewBox="0 0 300 300">
+
+<defs>
+<linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#ffd37c"/>
+<stop offset="100%" stop-color="#f28a12"/>
+</linearGradient>
+</defs>
+
+<path d="M150 30 L255 225 L45 225 Z" fill="url(#g1)" stroke="#d87000" stroke-width="6"/>
+
+<circle cx="115" cy="145" r="28" fill="white"/>
+<circle cx="185" cy="145" r="28" fill="white"/>
+
+<circle cx="115" cy="145" r="15" fill="#2a1208"/>
+<circle cx="185" cy="145" r="15" fill="#2a1208"/>
+
+<circle cx="120" cy="138" r="5" fill="white"/>
+<circle cx="190" cy="138" r="5" fill="white"/>
+
+<circle cx="92" cy="175" r="12" fill="#ff9b8c"/>
+<circle cx="208" cy="175" r="12" fill="#ff9b8c"/>
+
+<path d="M125 195 Q150 225 175 195" stroke="#5b1900" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+<line x1="60" y1="175" x2="30" y2="150" stroke="#5b2a0d" stroke-width="10" stroke-linecap="round"/>
+<line x1="240" y1="175" x2="270" y2="155" stroke="#5b2a0d" stroke-width="10" stroke-linecap="round"/>
+
+<line x1="135" y1="225" x2="125" y2="265" stroke="#5b2a0d" stroke-width="10" stroke-linecap="round"/>
+<line x1="165" y1="225" x2="175" y2="265" stroke="#5b2a0d" stroke-width="10" stroke-linecap="round"/>
+
+<circle cx="125" cy="270" r="10" fill="#5b2a0d"/>
+<circle cx="175" cy="270" r="10" fill="#5b2a0d"/>
+
+<line x1="30" y1="150" x2="18" y2="125" stroke="#5b2a0d" stroke-width="8" stroke-linecap="round"/>
+<line x1="30" y1="150" x2="5" y2="145" stroke="#5b2a0d" stroke-width="8" stroke-linecap="round"/>
+
+</svg>
 </div>
 
 <h1>Bonjourrrraaaaaaan</h1>
@@ -271,135 +253,84 @@ h1{font-size:44px;}
 <form id="barForm">
 
 <div class="top-grid">
-
 <div>
-<label>Nom du bar à samoussas <span class="req">*</span></label>
-<div class="input-wrap">
-<span class="icon">▣</span>
-<input type="text" id="nom" placeholder="Ex : Le Goût Péi" required>
-</div>
+<label>Nom du bar <span class="req">*</span></label>
+<input type="text" required>
 </div>
 
 <div>
 <label>Ville <span class="req">*</span></label>
-<div class="input-wrap">
-<span class="icon">●</span>
-<input type="text" id="ville" placeholder="Ex : Saint-Denis" required>
-</div>
+<input type="text" required>
 </div>
 
 <div>
 <label>Adresse <span class="req">*</span></label>
-<div class="input-wrap">
-<span class="icon">⌂</span>
-<input type="text" id="adresse" placeholder="Ex : 12 rue des Samoussas" required>
-</div>
+<input type="text" required>
 </div>
 
 <div>
-<label>Téléphone / WhatsApp <span class="req">*</span></label>
-<div class="input-wrap">
-<span class="icon">☎</span>
-<input type="tel" id="telephone" placeholder="Ex : 0692 00 00 00" required>
+<label>Téléphone <span class="req">*</span></label>
+<input type="text" required>
 </div>
-</div>
-
 </div>
 
 <div class="middle-grid">
 
 <div>
-<label>Types de samoussas proposés <span class="req">*</span></label>
+<label>Types proposés</label>
 
 <div class="check-grid">
-<label class="check-item"><input type="checkbox" value="Poulet" class="typeBox"> 🐔 Poulet</label>
-<label class="check-item"><input type="checkbox" value="Porc" class="typeBox"> 🐷 Porc</label>
-<label class="check-item"><input type="checkbox" value="Végé" class="typeBox"> 🌿 Végé</label>
-<label class="check-item"><input type="checkbox" value="Halal" class="typeBox"> ☪ Halal</label>
-<label class="check-item"><input type="checkbox" value="Bœuf" class="typeBox"> 🐂 Bœuf</label>
-<label class="check-item"><input type="checkbox" value="Spéciaux" class="typeBox"> ⭐ Spéciaux</label>
+<label class="check-item"><input type="checkbox"> Poulet</label>
+<label class="check-item"><input type="checkbox"> Porc</label>
+<label class="check-item"><input type="checkbox"> Végé</label>
+<label class="check-item"><input type="checkbox"> Halal</label>
+<label class="check-item"><input type="checkbox"> Bœuf</label>
+<label class="check-item"><input type="checkbox"> Spéciaux</label>
 </div>
 </div>
 
 <div>
-<label>Présentation du commerce <span style="font-weight:400;">(500 caractères max)</span> <span class="req">*</span></label>
+<label>Présentation (500 max)</label>
+
 <div class="textarea-box">
-<textarea id="presentation" maxlength="500" placeholder="Présente ton commerce : spécialités, ambiance, horaires, savoir-faire, produits maison..." required></textarea>
-<div class="counter"><span id="count">0</span> / 500</div>
+<textarea maxlength="500" id="presentation"></textarea>
+<div class="counter"><span id="count">0</span>/500</div>
 </div>
+
 </div>
 
 </div>
 
 <div class="photo-zone">
-<label>Photos du commerce et des produits <span class="req">*</span></label>
-
-<label for="photos" class="upload-box">
-
-<div class="upload-left">
-<div class="big-icon">▧</div>
-
-<div>
-<div class="upload-title">Clique pour ajouter des photos ou glisse-dépose ici</div>
-<div class="upload-small">Jusqu’à 5 photos maximum (devanture, vitrine, produits, ambiance...)</div>
+<label>Photos</label>
+<div class="upload-box">
+Clique ici pour ajouter jusqu'à 5 photos
 </div>
 </div>
 
-<div class="slots">
-<div class="slot">▧</div>
-<div class="slot">▧</div>
-<div class="slot">▧</div>
-<div class="slot">▧</div>
-<div class="slot">▧</div>
-</div>
-
-</label>
-
-<input type="file" id="photos" accept="image/*" multiple>
-</div>
-
-<button type="submit">Ajouter mon bar ✈</button>
+<button type="submit">Ajouter mon bar</button>
 
 <div class="success" id="successMsg">
-Ton bar a bien été ajouté en attente de validation ✅
+Ton commerce a bien été ajouté ✅
 </div>
 
 </form>
+
 </div>
 
 </div>
 
 <script>
-const presentation = document.getElementById("presentation");
-const count = document.getElementById("count");
+const presentation=document.getElementById("presentation");
+const count=document.getElementById("count");
 
-presentation.addEventListener("input", function(){
-count.textContent = this.value.length;
+presentation.addEventListener("input",function(){
+count.textContent=this.value.length;
 });
 
-document.getElementById("barForm").addEventListener("submit", function(e){
+document.getElementById("barForm").addEventListener("submit",function(e){
 e.preventDefault();
-
-const photoFiles = document.getElementById("photos").files;
-
-if(photoFiles.length > 5){
-alert("Maximum 5 photos.");
-return;
-}
-
-let types = [];
-document.querySelectorAll(".typeBox:checked").forEach(box=>{
-types.push(box.value);
-});
-
-if(types.length === 0){
-alert("Choisis au moins un type de samoussa.");
-return;
-}
-
-document.getElementById("successMsg").style.display = "block";
-this.reset();
-count.textContent = "0";
+document.getElementById("successMsg").style.display="block";
 });
 </script>
 
