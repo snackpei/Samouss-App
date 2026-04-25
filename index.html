@@ -9,131 +9,32 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
-body{
-font-family:Arial,sans-serif;
-background:radial-gradient(circle at top,#fffaf4,#fff1df);
-color:#5a2b0c;
-min-height:100vh;
-padding:30px;
-}
-
+body{font-family:Arial,sans-serif;background:radial-gradient(circle at top,#fffaf4,#fff1df);color:#5a2b0c;min-height:100vh;padding:30px}
 .container{max-width:1250px;margin:auto;text-align:center}
 .logo{width:170px;margin:auto;animation:floaty 3s ease-in-out infinite}
 .logo svg{width:100%;display:block}
-
-@keyframes floaty{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-8px)}
-}
-
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 h1{font-size:82px;color:#ff7300;font-weight:900;line-height:1}
 .subtitle{font-size:30px;margin:18px 0 32px;color:#6b3718}
-
-.form-box{
-background:rgba(255,255,255,.88);
-border-radius:22px;
-padding:34px;
-box-shadow:0 20px 55px rgba(115,65,20,.13);
-text-align:left;
-}
-
+.form-box{background:rgba(255,255,255,.88);border-radius:22px;padding:34px;box-shadow:0 20px 55px rgba(115,65,20,.13);text-align:left}
 .form-box h2{text-align:center;font-size:36px;margin-bottom:28px}
 .top-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-
 label{display:block;font-weight:800;font-size:15px;margin-bottom:9px}
 .req{color:#ff6500}
-
-input,textarea{
-width:100%;
-border:1.5px solid #ffb06a;
-border-radius:8px;
-padding:14px;
-font-size:15px;
-background:white;
-outline:none;
-}
-
+input,textarea{width:100%;border:1.5px solid #ffb06a;border-radius:8px;padding:14px;font-size:15px;background:white;outline:none}
 textarea{height:126px;resize:none}
-
-.middle-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:28px;
-margin-top:26px;
-}
-
+.middle-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:26px}
 .check-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-
-.check-item{
-border:1.5px solid #ffb06a;
-border-radius:8px;
-background:white;
-padding:15px;
-display:flex;
-align-items:center;
-gap:10px;
-font-weight:800;
-}
-
+.check-item{border:1.5px solid #ffb06a;border-radius:8px;background:white;padding:15px;display:flex;align-items:center;gap:10px;font-weight:800}
 .check-item input{width:17px;height:17px;accent-color:#ff7300}
-
 .textarea-box{position:relative}
-
-.counter{
-position:absolute;
-right:14px;
-bottom:12px;
-font-size:13px;
-color:#7b644f;
-}
-
-button{
-width:100%;
-border:none;
-border-radius:8px;
-margin-top:16px;
-padding:19px;
-font-size:24px;
-font-weight:900;
-color:white;
-background:linear-gradient(180deg,#ff8a00,#ff5a00);
-cursor:pointer;
-}
-
-.message{
-margin-top:16px;
-padding:14px;
-border-radius:10px;
-text-align:center;
-font-weight:800;
-display:none;
-}
-
-.message.ok{
-display:block;
-background:#e8ffe8;
-color:#1f6b1f;
-}
-
-.message.error{
-display:block;
-background:#ffe8e8;
-color:#9b1c1c;
-}
-
-.message.loading{
-display:block;
-background:#fff4d8;
-color:#8a5700;
-}
-
-@media(max-width:950px){
-h1{font-size:44px}
-.subtitle{font-size:20px}
-.top-grid,.middle-grid{grid-template-columns:1fr}
-.check-grid{grid-template-columns:1fr}
-}
+.counter{position:absolute;right:14px;bottom:12px;font-size:13px;color:#7b644f}
+button{width:100%;border:none;border-radius:8px;margin-top:16px;padding:19px;font-size:24px;font-weight:900;color:white;background:linear-gradient(180deg,#ff8a00,#ff5a00);cursor:pointer}
+.message{margin-top:16px;padding:14px;border-radius:10px;text-align:center;font-weight:800;display:none}
+.message.ok{display:block;background:#e8ffe8;color:#1f6b1f}
+.message.error{display:block;background:#ffe8e8;color:#9b1c1c}
+.message.loading{display:block;background:#fff4d8;color:#8a5700}
+@media(max-width:950px){h1{font-size:44px}.subtitle{font-size:20px}.top-grid,.middle-grid{grid-template-columns:1fr}.check-grid{grid-template-columns:1fr}}
 </style>
 </head>
 
@@ -166,7 +67,6 @@ h1{font-size:44px}
 <p class="subtitle">Ajoute ton bar à samoussas sur <strong>Samouss'App</strong></p>
 
 <div class="form-box">
-
 <h2>Formulaire d’ajout</h2>
 
 <form id="barForm">
@@ -197,7 +97,6 @@ h1{font-size:44px}
 
 <div>
 <label>Types proposés <span class="req">*</span></label>
-
 <div class="check-grid">
 <label class="check-item"><input type="checkbox" value="Poulet" class="typeBox"> Poulet</label>
 <label class="check-item"><input type="checkbox" value="Porc" class="typeBox"> Porc</label>
@@ -219,11 +118,9 @@ h1{font-size:44px}
 </div>
 
 <button id="submitBtn" type="submit">Ajouter mon bar</button>
-
 <div id="formMessage" class="message"></div>
 
 </form>
-
 </div>
 
 </div>
@@ -233,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
 const supabaseUrl = "https://ofbtvqnfcnzqptnzkkkq.supabase.co";
 const supabaseKey = "sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
-
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 const form = document.getElementById("barForm");
@@ -277,15 +173,15 @@ return;
 const nom = document.getElementById("nom").value.trim();
 
 const data = {
-nom: nom,
-ville: document.getElementById("ville").value.trim(),
-adresse: document.getElementById("adresse").value.trim(),
-telephone: document.getElementById("telephone").value.trim(),
-presentation: document.getElementById("presentation").value.trim(),
-types: types.join(", "),
-photos: "",
-slug: createSlug(nom),
-statut: "en_attente"
+NOM: nom,
+VILLE: document.getElementById("ville").value.trim(),
+ADRESSE: document.getElementById("adresse").value.trim(),
+TELEPHONE: document.getElementById("telephone").value.trim(),
+PRESENTATION: document.getElementById("presentation").value.trim(),
+TYPES: types.join(", "),
+PHOTOS: "",
+SLUG: createSlug(nom),
+STATUT: "en_attente"
 };
 
 const result = await supabaseClient
