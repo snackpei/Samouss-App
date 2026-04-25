@@ -78,8 +78,15 @@ background:#fffdf9;
 }
 
 textarea{
-min-height:90px;
+min-height:110px;
 resize:none;
+}
+
+.counter{
+text-align:right;
+font-size:13px;
+color:#9a6a3a;
+margin-top:6px;
 }
 
 .check-group{
@@ -102,9 +109,13 @@ font-weight:bold;
 
 .check-item input{
 width:auto;
-padding:0;
-margin:0;
 transform:scale(1.2);
+}
+
+.helper{
+font-size:13px;
+color:#9a6a3a;
+margin-top:6px;
 }
 
 button{
@@ -118,11 +129,6 @@ color:white;
 font-size:17px;
 font-weight:bold;
 cursor:pointer;
-box-shadow:0 10px 22px rgba(255,123,0,.25);
-}
-
-button:hover{
-transform:scale(1.02);
 }
 
 .success{
@@ -137,25 +143,9 @@ text-align:center;
 font-weight:bold;
 }
 
-.back{
-display:block;
-margin-top:22px;
-text-align:center;
-color:#ff7b00;
-font-weight:bold;
-text-decoration:none;
-}
-
-.brand{
-font-size:15px;
-margin-top:10px;
-color:#9a6a3a;
-}
-
 @media(max-width:600px){
-.check-group{
-grid-template-columns:1fr;
-}
+.check-group{grid-template-columns:1fr;}
+h1{font-size:36px;}
 }
 </style>
 </head>
@@ -173,7 +163,6 @@ grid-template-columns:1fr;
 <stop offset="100%" stop-color="#b84b00"/>
 </linearGradient>
 </defs>
-
 <path d="M60 8 C72 29 91 57 108 87 C75 89 42 89 12 87 C29 57 48 29 60 8Z"
 fill="url(#gold)" stroke="#8f3a00" stroke-width="3"/>
 </svg>
@@ -188,45 +177,34 @@ fill="url(#gold)" stroke="#8f3a00" stroke-width="3"/>
 <form id="barForm">
 
 <label>Nom du bar à samoussas</label>
-<input type="text" id="nom" placeholder="Ex : Le Goût Péi" required>
+<input type="text" id="nom" required>
 
 <label>Ville</label>
-<input type="text" id="ville" placeholder="Ex : Saint-Denis" required>
+<input type="text" id="ville" required>
 
 <label>Adresse</label>
-<input type="text" id="adresse" placeholder="Ex : 12 rue des Samoussas" required>
+<input type="text" id="adresse" required>
 
 <label>Téléphone / WhatsApp</label>
-<input type="tel" id="telephone" placeholder="Ex : 0692 00 00 00" required>
+<input type="tel" id="telephone" required>
 
 <label>Types de samoussas proposés</label>
-
 <div class="check-group">
-
-<label class="check-item">
-<input type="checkbox" value="Poulet" class="typeBox">
-Poulet
-</label>
-
-<label class="check-item">
-<input type="checkbox" value="Porc" class="typeBox">
-Porc
-</label>
-
-<label class="check-item">
-<input type="checkbox" value="Végé" class="typeBox">
-Végé
-</label>
-
-<label class="check-item">
-<input type="checkbox" value="Halal" class="typeBox">
-Halal
-</label>
-
+<label class="check-item"><input type="checkbox" value="Poulet" class="typeBox"> Poulet</label>
+<label class="check-item"><input type="checkbox" value="Porc" class="typeBox"> Porc</label>
+<label class="check-item"><input type="checkbox" value="Végé" class="typeBox"> Végé</label>
+<label class="check-item"><input type="checkbox" value="Halal" class="typeBox"> Halal</label>
+<label class="check-item"><input type="checkbox" value="Bœuf" class="typeBox"> Bœuf</label>
+<label class="check-item"><input type="checkbox" value="Spéciaux" class="typeBox"> Spéciaux</label>
 </div>
 
-<label>Description</label>
-<textarea id="description" placeholder="Ex : Samoussas chauds, faits maison, disponibles tous les jours."></textarea>
+<label>Présentation du commerce</label>
+<textarea id="presentation" maxlength="500" placeholder="500 caractères maximum"></textarea>
+<div class="counter"><span id="count">0</span>/500</div>
+
+<label>Photos du commerce et des produits</label>
+<input type="file" id="photos" accept="image/*" multiple>
+<div class="helper">Maximum 5 photos</div>
 
 <button type="submit">Ajouter mon bar</button>
 
@@ -237,35 +215,27 @@ Ton bar a bien été ajouté en attente de validation ✅
 </form>
 </div>
 
-<a href="#" class="back">Retour à l’accueil</a>
-<div class="brand">Samouss'App — Le meilleur du samoussa arrive bientôt</div>
-
 </div>
 
 <script>
+const presentation = document.getElementById("presentation");
+const count = document.getElementById("count");
+
+presentation.addEventListener("input", function(){
+count.textContent = this.value.length;
+});
+
 document.getElementById("barForm").addEventListener("submit", function(e){
 e.preventDefault();
 
-let types = [];
-document.querySelectorAll(".typeBox:checked").forEach(box=>{
-types.push(box.value);
-});
-
-const bar = {
-nom: document.getElementById("nom").value,
-ville: document.getElementById("ville").value,
-adresse: document.getElementById("adresse").value,
-telephone: document.getElementById("telephone").value,
-types: types,
-description: document.getElementById("description").value
-};
-
-let bars = JSON.parse(localStorage.getItem("barsSamoussApp")) || [];
-bars.push(bar);
-localStorage.setItem("barsSamoussApp", JSON.stringify(bars));
+if(document.getElementById("photos").files.length > 5){
+alert("Maximum 5 photos.");
+return;
+}
 
 document.getElementById("successMsg").style.display = "block";
-document.getElementById("barForm").reset();
+this.reset();
+count.textContent = "0";
 });
 </script>
 
