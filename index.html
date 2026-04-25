@@ -46,7 +46,9 @@ margin:18px 0 32px;
 color:#6b3718;
 }
 
-.subtitle strong{font-weight:900;}
+.subtitle strong{
+font-weight:900;
+}
 
 .form-box{
 background:rgba(255,255,255,.88);
@@ -76,7 +78,9 @@ font-size:15px;
 margin-bottom:9px;
 }
 
-.req{color:#ff6500;}
+.req{
+color:#ff6500;
+}
 
 .input-wrap{
 position:relative;
@@ -166,6 +170,7 @@ display:grid;
 grid-template-columns:1.3fr 1fr;
 align-items:center;
 gap:22px;
+cursor:pointer;
 }
 
 .upload-left{
@@ -238,12 +243,12 @@ font-weight:800;
 }
 
 @media(max-width:950px){
-h1{font-size:44px}
-.subtitle{font-size:20px}
-.top-grid,.middle-grid{grid-template-columns:1fr}
-.check-grid{grid-template-columns:1fr}
-.upload-box{grid-template-columns:1fr}
-.slots{flex-wrap:wrap;justify-content:flex-start}
+h1{font-size:44px;}
+.subtitle{font-size:20px;}
+.top-grid,.middle-grid{grid-template-columns:1fr;}
+.check-grid{grid-template-columns:1fr;}
+.upload-box{grid-template-columns:1fr;}
+.slots{flex-wrap:wrap;justify-content:flex-start;}
 }
 </style>
 </head>
@@ -253,7 +258,7 @@ h1{font-size:44px}
 <div class="container">
 
 <div class="logo">
-<img src="logo.png" alt="Logo Samouss'App">
+<img src="a_clean_simple_illustration_3d_render_style_scene.png" alt="Logo Samouss'App">
 </div>
 
 <h1>Bonjourrrraaaaaaan</h1>
@@ -330,8 +335,10 @@ h1{font-size:44px}
 <label>Photos du commerce et des produits <span class="req">*</span></label>
 
 <label for="photos" class="upload-box">
+
 <div class="upload-left">
 <div class="big-icon">▧</div>
+
 <div>
 <div class="upload-title">Clique pour ajouter des photos ou glisse-dépose ici</div>
 <div class="upload-small">Jusqu’à 5 photos maximum (devanture, vitrine, produits, ambiance...)</div>
@@ -345,6 +352,7 @@ h1{font-size:44px}
 <div class="slot">▧</div>
 <div class="slot">▧</div>
 </div>
+
 </label>
 
 <input type="file" id="photos" accept="image/*" multiple>
