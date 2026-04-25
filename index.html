@@ -6,11 +6,7 @@
 <title>Samouss'App</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 font-family:Arial,sans-serif;
@@ -27,7 +23,7 @@ text-align:center;
 }
 
 .logo{
-width:180px;
+width:170px;
 margin:auto;
 animation:floaty 3s ease-in-out infinite;
 }
@@ -48,7 +44,7 @@ font-size:82px;
 line-height:1;
 color:#ff7300;
 font-weight:900;
-margin-top:5px;
+margin-top:-5px;
 }
 
 .subtitle{
@@ -160,9 +156,42 @@ margin-top:26px;
 border:1.5px dashed #ffb06a;
 border-radius:10px;
 background:white;
-padding:22px 26px;
-text-align:center;
+padding:22px;
 cursor:pointer;
+}
+
+.upload-title{
+font-weight:900;
+font-size:18px;
+margin-bottom:8px;
+}
+
+.upload-small{
+color:#6d5a47;
+font-size:14px;
+margin-bottom:18px;
+}
+
+.slots{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:14px;
+}
+
+.slot{
+height:82px;
+border:1.5px dashed #c9a581;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+color:#a48363;
+background:#fffaf5;
+}
+
+#photos{
+display:none;
 }
 
 button{
@@ -176,6 +205,7 @@ font-weight:900;
 color:white;
 background:linear-gradient(180deg,#ff8a00,#ff5a00);
 cursor:pointer;
+box-shadow:0 10px 20px rgba(255,100,0,.2);
 }
 
 .success{
@@ -194,6 +224,7 @@ h1{font-size:44px;}
 .subtitle{font-size:20px;}
 .top-grid,.middle-grid{grid-template-columns:1fr;}
 .check-grid{grid-template-columns:1fr;}
+.slots{grid-template-columns:repeat(2,1fr);}
 }
 </style>
 </head>
@@ -237,9 +268,6 @@ h1{font-size:44px;}
 <circle cx="125" cy="270" r="10" fill="#5b2a0d"/>
 <circle cx="175" cy="270" r="10" fill="#5b2a0d"/>
 
-<line x1="30" y1="150" x2="18" y2="125" stroke="#5b2a0d" stroke-width="8" stroke-linecap="round"/>
-<line x1="30" y1="150" x2="5" y2="145" stroke="#5b2a0d" stroke-width="8" stroke-linecap="round"/>
-
 </svg>
 </div>
 
@@ -253,6 +281,7 @@ h1{font-size:44px;}
 <form id="barForm">
 
 <div class="top-grid">
+
 <div>
 <label>Nom du bar <span class="req">*</span></label>
 <input type="text" required>
@@ -272,6 +301,7 @@ h1{font-size:44px;}
 <label>Téléphone <span class="req">*</span></label>
 <input type="text" required>
 </div>
+
 </div>
 
 <div class="middle-grid">
@@ -302,10 +332,22 @@ h1{font-size:44px;}
 </div>
 
 <div class="photo-zone">
-<label>Photos</label>
-<div class="upload-box">
-Clique ici pour ajouter jusqu'à 5 photos
+<label>Photos du commerce <span class="req">*</span></label>
+
+<label for="photos" class="upload-box">
+<div class="upload-title">Clique ici pour ajouter 5 photos minimum</div>
+<div class="upload-small">Devanture, vitrine, produits, ambiance...</div>
+
+<div class="slots">
+<div class="slot">+</div>
+<div class="slot">+</div>
+<div class="slot">+</div>
+<div class="slot">+</div>
+<div class="slot">+</div>
 </div>
+</label>
+
+<input type="file" id="photos" multiple accept="image/*">
 </div>
 
 <button type="submit">Ajouter mon bar</button>
@@ -330,6 +372,14 @@ count.textContent=this.value.length;
 
 document.getElementById("barForm").addEventListener("submit",function(e){
 e.preventDefault();
+
+let photos=document.getElementById("photos").files.length;
+
+if(photos < 5){
+alert("Il faut ajouter minimum 5 photos.");
+return;
+}
+
 document.getElementById("successMsg").style.display="block";
 });
 </script>
