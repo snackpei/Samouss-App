@@ -8,92 +8,254 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
+
 body{
-margin:0;
 font-family:Arial,sans-serif;
-background:#fff3df;
-color:#4b250c;
-padding:25px;
+background:linear-gradient(180deg,#fff8ef,#ffe8cf);
+color:#2b1608;
+min-height:100vh;
+padding-bottom:90px;
 }
 
-.container{
-max-width:900px;
+.app{
+max-width:520px;
 margin:auto;
+background:#fffaf3;
+min-height:100vh;
+}
+
+.top{
+padding:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-weight:900;
+color:#9b3f00;
+}
+
+.hero{
+height:240px;
+background:
+linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.35)),
+url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80");
+background-size:cover;
+background-position:center;
+border-radius:0 0 28px 28px;
+position:relative;
+}
+
+.status{
+position:absolute;
+top:16px;
+left:16px;
+background:#eaffdf;
+color:#218b25;
+padding:8px 14px;
+border-radius:999px;
+font-weight:900;
+font-size:14px;
 }
 
 .card{
+margin:-45px 18px 18px;
 background:white;
-border-radius:24px;
-padding:30px;
-box-shadow:0 15px 35px rgba(120,60,0,.15);
+border-radius:26px;
+padding:22px;
+box-shadow:0 18px 35px rgba(130,70,0,.18);
+position:relative;
+z-index:2;
+}
+
+.logo{
+width:72px;
+height:72px;
+border-radius:50%;
+background:linear-gradient(135deg,#ffd36a,#ff8500);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+color:#5a2b0c;
+font-size:14px;
+text-align:center;
+box-shadow:0 8px 18px rgba(255,115,0,.25);
+margin-bottom:12px;
 }
 
 h1{
-font-size:42px;
-color:#ff7300;
+font-size:28px;
+margin-bottom:8px;
+}
+
+.rating{
+color:#ff8a00;
+font-weight:900;
 margin-bottom:10px;
 }
 
-.badge{
-display:inline-block;
-background:#fff0dc;
-border:1px solid #ff9b45;
-color:#ff7300;
-padding:8px 14px;
-border-radius:999px;
-font-weight:bold;
-margin:8px 6px 8px 0;
+.info{
+font-size:15px;
+color:#5d4a3a;
+margin:7px 0;
 }
 
-.info{
-font-size:18px;
+.badges{
 margin:14px 0;
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.badge{
+background:#fff1df;
+color:#d85d00;
+border:1px solid #ffb06a;
+padding:8px 12px;
+border-radius:999px;
+font-weight:900;
+font-size:14px;
+}
+
+.presentation{
+margin-top:16px;
+font-size:15px;
+line-height:1.5;
+color:#3b2718;
 }
 
 .actions{
-display:flex;
+display:grid;
+grid-template-columns:repeat(3,1fr);
 gap:12px;
-flex-wrap:wrap;
-margin-top:25px;
+margin:18px;
 }
 
-a{
+.action{
+background:white;
+border-radius:18px;
+padding:15px 8px;
+text-align:center;
+box-shadow:0 8px 20px rgba(130,70,0,.10);
+font-weight:900;
+color:#5a2b0c;
 text-decoration:none;
 }
 
-.btn{
-display:inline-block;
-background:#ff7300;
-color:white;
-padding:14px 20px;
-border-radius:12px;
-font-weight:bold;
+.section{
+margin:18px;
+background:white;
+border-radius:24px;
+padding:20px;
+box-shadow:0 10px 25px rgba(130,70,0,.10);
 }
 
-.btn.secondary{
-background:#5a2b0c;
+.section h2{
+font-size:22px;
+margin-bottom:14px;
+}
+
+.menu-item{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:12px 0;
+border-bottom:1px solid #f1dfce;
+}
+
+.menu-item:last-child{
+border-bottom:none;
+}
+
+.thumb{
+width:56px;
+height:56px;
+border-radius:14px;
+background:
+url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=200&q=80");
+background-size:cover;
+background-position:center;
+margin-right:12px;
+}
+
+.menu-left{
+display:flex;
+align-items:center;
+}
+
+.menu-title{
+font-weight:900;
+}
+
+.menu-sub{
+font-size:13px;
+color:#8a6a50;
+margin-top:3px;
+}
+
+.plus{
+width:34px;
+height:34px;
+border-radius:50%;
+background:#ff8500;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+font-size:22px;
 }
 
 .error{
+padding:40px 20px;
 text-align:center;
-font-size:22px;
-font-weight:bold;
+font-weight:900;
 color:#9b1c1c;
-margin-top:80px;
+}
+
+.bottom-nav{
+position:fixed;
+left:50%;
+bottom:0;
+transform:translateX(-50%);
+width:100%;
+max-width:520px;
+background:white;
+border-radius:28px 28px 0 0;
+box-shadow:0 -8px 25px rgba(0,0,0,.08);
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:12px 5px;
+}
+
+.nav-item{
+text-align:center;
+font-size:12px;
+color:#6b5140;
+font-weight:700;
+}
+
+.nav-item span{
+display:block;
+font-size:24px;
+margin-bottom:4px;
+}
+
+.active{
+color:#ff7300;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container" id="content">
-Chargement...
+<div class="app" id="app">
+<div class="error">Chargement...</div>
 </div>
 
 <script>
 const supabaseUrl = "https://ofbtvqnfcnzqptnzkkkq.supabase.co";
 const supabaseKey = "sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
-
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 function getSlug(){
@@ -102,11 +264,11 @@ return params.get("slug");
 }
 
 async function loadBar(){
-const content = document.getElementById("content");
+const app = document.getElementById("app");
 const slug = getSlug();
 
 if(!slug){
-content.innerHTML = '<div class="error">Aucun bar sélectionné.</div>';
+app.innerHTML = '<div class="error">Aucun bar sélectionné.</div>';
 return;
 }
 
@@ -118,39 +280,95 @@ const result = await supabaseClient
 .single();
 
 if(result.error || !result.data){
-content.innerHTML = '<div class="error">Ce bar n’est pas encore disponible ou n’a pas été validé.</div>';
+app.innerHTML = '<div class="error">Ce bar n’est pas encore validé.</div>';
 return;
 }
 
 const bar = result.data;
 
-let types = "";
+let badges = "";
 if(bar.TYPES){
 bar.TYPES.split(",").forEach(function(type){
-types += `<span class="badge">${type.trim()}</span>`;
+badges += `<span class="badge">${type.trim()}</span>`;
 });
 }
 
-content.innerHTML = `
+const mapsQuery = encodeURIComponent((bar.ADRESSE || "") + " " + (bar.VILLE || "") + " La Réunion");
+
+app.innerHTML = `
+<div class="top">
+<div>‹</div>
+<div>Bonjourrrraaaaaaan</div>
+<div>♡</div>
+</div>
+
+<div class="hero">
+<div class="status">Ouvert</div>
+</div>
+
 <div class="card">
-<h1>${bar.NOM}</h1>
+<div class="logo">SAM<br>APP</div>
+<h1>${bar.NOM || ""}</h1>
+<div class="rating">★ 4,8 · Nouveau sur Samouss'App</div>
+<div class="info">📍 ${bar.ADRESSE || ""}, ${bar.VILLE || ""}</div>
+<div class="info">☎ ${bar.TELEPHONE || ""}</div>
 
-<div>${types}</div>
+<div class="badges">${badges}</div>
 
-<div class="info"><strong>Ville :</strong> ${bar.VILLE || ""}</div>
-<div class="info"><strong>Adresse :</strong> ${bar.ADRESSE || ""}</div>
-<div class="info"><strong>Téléphone :</strong> ${bar.TELEPHONE || ""}</div>
-
-<div class="info">
-<strong>Présentation :</strong><br>
+<div class="presentation">
 ${bar.PRESENTATION || ""}
+</div>
 </div>
 
 <div class="actions">
-<a class="btn" href="tel:${bar.TELEPHONE}">Appeler</a>
-<a class="btn secondary" target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((bar.ADRESSE || "") + " " + (bar.VILLE || "") + " La Réunion")}">Itinéraire</a>
-<a class="btn secondary" href="index.html">Retour</a>
+<a class="action" href="tel:${bar.TELEPHONE || ""}">☎<br>Appeler</a>
+<a class="action" target="_blank" href="https://www.google.com/maps/search/?api=1&query=${mapsQuery}">➤<br>Itinéraire</a>
+<a class="action" href="#">♡<br>Favori</a>
 </div>
+
+<div class="section">
+<h2>Leurs samoussas</h2>
+
+<div class="menu-item">
+<div class="menu-left">
+<div class="thumb"></div>
+<div>
+<div class="menu-title">Poulet</div>
+<div class="menu-sub">Poulet tendre, épices péi</div>
+</div>
+</div>
+<div class="plus">+</div>
+</div>
+
+<div class="menu-item">
+<div class="menu-left">
+<div class="thumb"></div>
+<div>
+<div class="menu-title">Végé</div>
+<div class="menu-sub">Légumes frais, épices douces</div>
+</div>
+</div>
+<div class="plus">+</div>
+</div>
+
+<div class="menu-item">
+<div class="menu-left">
+<div class="thumb"></div>
+<div>
+<div class="menu-title">Spéciaux</div>
+<div class="menu-sub">Recettes originales du bar</div>
+</div>
+</div>
+<div class="plus">+</div>
+</div>
+
+</div>
+
+<div class="bottom-nav">
+<div class="nav-item active"><span>⌂</span>Accueil</div>
+<div class="nav-item"><span>⌕</span>Recherche</div>
+<div class="nav-item"><span>♡</span>Favoris</div>
+<div class="nav-item"><span>☻</span>Compte</div>
 </div>
 `;
 }
