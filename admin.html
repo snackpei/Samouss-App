@@ -2,190 +2,268 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Samouss'App</title>
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ff7300">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard Admin - SamoussApp</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
+
 body{
-margin:0;
 font-family:Arial,sans-serif;
-background:#fff3df;
-color:#4b250c;
-padding:25px;
+background:linear-gradient(180deg,#fff7ef,#ffe2c0);
+padding:20px;
+color:#2b1608;
 }
 
-h1{
-text-align:center;
-color:#ff7300;
-font-size:42px;
-}
-
-.admin-box{
+.wrap{
 max-width:1100px;
-margin:30px auto;
+margin:auto;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+margin-bottom:25px;
+flex-wrap:wrap;
+}
+
+.title{
+font-size:34px;
+font-weight:900;
+color:#ff6a00;
+}
+
+.user{
+font-weight:800;
+color:#5a2b0c;
+}
+
+.logout{
+border:none;
+background:#2b1608;
+color:white;
+padding:12px 18px;
+border-radius:14px;
+font-weight:900;
+cursor:pointer;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:25px;
+}
+
+.stat{
 background:white;
-border-radius:20px;
-padding:25px;
-box-shadow:0 15px 35px rgba(120,60,0,.15);
+border-radius:22px;
+padding:20px;
+box-shadow:0 12px 25px rgba(0,0,0,.08);
+}
+
+.stat h3{
+font-size:15px;
+color:#7a5a40;
+margin-bottom:10px;
+}
+
+.stat strong{
+font-size:34px;
+color:#ff6a00;
+}
+
+.box{
+background:white;
+border-radius:26px;
+padding:22px;
+box-shadow:0 12px 25px rgba(0,0,0,.08);
 }
 
 .card{
-border:1px solid #ffb06a;
-border-radius:16px;
-padding:18px;
-margin-bottom:16px;
+border:1px solid #ffe2bf;
+border-radius:18px;
+padding:16px;
+margin-bottom:14px;
 background:#fffaf5;
 }
 
 .card h2{
-margin:0 0 10px;
-color:#5a2b0c;
+font-size:20px;
+margin-bottom:8px;
 }
 
 .info{
-margin:6px 0;
+margin:5px 0;
+color:#6b4d35;
 }
 
 .status{
-font-weight:bold;
-color:#ff7300;
+font-weight:900;
+color:#ff6a00;
+margin-top:10px;
 }
 
 .actions{
-margin-top:15px;
 display:flex;
 gap:10px;
+margin-top:14px;
 flex-wrap:wrap;
 }
 
 button{
 border:none;
-padding:12px 18px;
-border-radius:10px;
-font-weight:bold;
+padding:11px 16px;
+border-radius:12px;
+font-weight:900;
 cursor:pointer;
-font-size:15px;
 }
 
-.accept{
-background:#2ecc71;
-color:white;
-}
+.accept{background:#2ecc71;color:white}
+.refuse{background:#e74c3c;color:white}
+.refresh{background:#ff6a00;color:white}
 
-.refuse{
-background:#e74c3c;
-color:white;
-}
-
-.refresh{
-display:block;
-margin:20px auto;
-background:#ff7300;
-color:white;
-}
-
-.message{
+.empty{
+padding:25px;
 text-align:center;
-font-weight:bold;
-margin-top:15px;
+color:#7a5a40;
 }
+
 </style>
 </head>
-
 <body>
 
-<h1>Admin Samouss'App</h1>
+<div class="wrap">
 
-<button class="refresh" onclick="loadBars()">Actualiser</button>
-
-<div class="admin-box" id="barsList">
-Chargement...
+<div class="top">
+<div>
+<div class="title">🥟 Dashboard Admin</div>
+<div class="user" id="welcome"></div>
 </div>
 
-<div class="message" id="message"></div>
+<div style="display:flex;gap:10px;">
+<button class="refresh" onclick="loadBars()">Actualiser</button>
+<button class="logout" onclick="logout()">Déconnexion</button>
+</div>
+</div>
+
+<div class="stats">
+<div class="stat">
+<h3>Bars en attente</h3>
+<strong id="pending">0</strong>
+</div>
+
+<div class="stat">
+<h3>Bars validés</h3>
+<strong id="valides">0</strong>
+</div>
+
+<div class="stat">
+<h3>Refusés</h3>
+<strong id="refuses">0</strong>
+</div>
+</div>
+
+<div class="box">
+<div id="barsList">Chargement...</div>
+</div>
+
+</div>
 
 <script>
-const supabaseUrl = "https://ofbtvqnfcnzqptnzkkkq.supabase.co";
-const supabaseKey = "sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
+if(localStorage.getItem("adminLogged")!=="yes"){
+window.location.href="login.html";
+}
 
-const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+document.getElementById("welcome").innerHTML =
+"Connecté : " + localStorage.getItem("adminName");
+
+const supabaseUrl="https://ofbtvqnfcnzqptnzkkkq.supabase.co";
+const supabaseKey="sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
+const supabaseClient=window.supabase.createClient(supabaseUrl,supabaseKey);
+
+function logout(){
+localStorage.clear();
+window.location.href="login.html";
+}
 
 async function loadBars(){
-const list = document.getElementById("barsList");
-const message = document.getElementById("message");
 
-message.textContent = "";
-list.innerHTML = "Chargement...";
+const list=document.getElementById("barsList");
 
-const result = await supabaseClient
+const result=await supabaseClient
 .from("BARS")
 .select("*")
-.order("created_at", { ascending:false });
+.order("created_at",{ascending:false});
 
 if(result.error){
-list.innerHTML = "Erreur : " + result.error.message;
+list.innerHTML="Erreur";
 return;
 }
 
-if(result.data.length === 0){
-list.innerHTML = "Aucun bar proposé pour le moment.";
+const data=result.data;
+
+let pending=0;
+let valides=0;
+let refuses=0;
+
+data.forEach(b=>{
+if(b.STATUT==="valide") valides++;
+else if(b.STATUT==="refuse") refuses++;
+else pending++;
+});
+
+document.getElementById("pending").innerHTML=pending;
+document.getElementById("valides").innerHTML=valides;
+document.getElementById("refuses").innerHTML=refuses;
+
+if(data.length===0){
+list.innerHTML='<div class="empty">Aucun bar.</div>';
 return;
 }
 
-list.innerHTML = "";
+list.innerHTML="";
 
-result.data.forEach(function(bar){
-const card = document.createElement("div");
-card.className = "card";
+data.forEach(bar=>{
 
-card.innerHTML = `
+const card=document.createElement("div");
+card.className="card";
+
+card.innerHTML=`
 <h2>${bar.NOM || "Sans nom"}</h2>
-<div class="info"><strong>Ville :</strong> ${bar.VILLE || ""}</div>
-<div class="info"><strong>Adresse :</strong> ${bar.ADRESSE || ""}</div>
-<div class="info"><strong>Téléphone :</strong> ${bar.TELEPHONE || ""}</div>
-<div class="info"><strong>Types :</strong> ${bar.TYPES || ""}</div>
-<div class="info"><strong>Présentation :</strong> ${bar.PRESENTATION || ""}</div>
-<div class="info"><strong>Slug :</strong> ${bar.SLUG || ""}</div>
-<div class="info status"><strong>Statut :</strong> ${bar.STATUT || ""}</div>
+<div class="info">📍 ${bar.VILLE || ""}</div>
+<div class="info">📌 ${bar.ADRESSE || ""}</div>
+<div class="info">☎ ${bar.TELEPHONE || ""}</div>
+<div class="info">🥟 ${bar.TYPES || ""}</div>
+<div class="status">Statut : ${bar.STATUT || "attente"}</div>
 
 <div class="actions">
-<button class="accept" onclick="updateStatus(${bar.id}, 'valide')">Valider</button>
-<button class="refuse" onclick="updateStatus(${bar.id}, 'refuse')">Refuser</button>
+<button class="accept" onclick="updateStatus(${bar.id},'valide')">Valider</button>
+<button class="refuse" onclick="updateStatus(${bar.id},'refuse')">Refuser</button>
 </div>
 `;
 
 list.appendChild(card);
+
 });
+
 }
 
-async function updateStatus(id, statut){
-const message = document.getElementById("message");
-message.textContent = "Mise à jour...";
+async function updateStatus(id,statut){
 
-const result = await supabaseClient
+await supabaseClient
 .from("BARS")
-.update({ STATUT: statut })
-.eq("id", id);
+.update({STATUT:statut})
+.eq("id",id);
 
-if(result.error){
-message.textContent = "Erreur : " + result.error.message;
-return;
-}
-
-message.textContent = "Statut mis à jour ✅";
 loadBars();
 }
 
 loadBars();
-
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("sw.js");
-}
 </script>
 
 </body>
