@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Connexion Admin - SamoussApp</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:Arial,sans-serif;
+background:linear-gradient(180deg,#fff7ef,#ffe3c2);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.box{
+width:100%;
+max-width:420px;
+background:white;
+border-radius:28px;
+padding:35px 28px;
+box-shadow:0 20px 45px rgba(0,0,0,.08);
+}
+
+.logo{
+text-align:center;
+font-size:34px;
+font-weight:900;
+color:#ff6a00;
+margin-bottom:8px;
+}
+
+.sub{
+text-align:center;
+color:#7a5a40;
+margin-bottom:28px;
+font-weight:700;
+}
+
+input{
+width:100%;
+padding:16px;
+border-radius:16px;
+border:2px solid #ffe1be;
+margin-bottom:14px;
+font-size:16px;
+outline:none;
+}
+
+input:focus{
+border-color:#ff7a00;
+}
+
+button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:16px;
+background:linear-gradient(180deg,#ff8c00,#ff5a00);
+color:white;
+font-size:17px;
+font-weight:900;
+cursor:pointer;
+}
+
+button:hover{
+opacity:.95;
+}
+
+.msg{
+margin-top:16px;
+text-align:center;
+font-weight:700;
+color:#d10000;
+}
+
+.demo{
+margin-top:25px;
+padding:16px;
+border-radius:18px;
+background:#fff7ef;
+font-size:14px;
+color:#5a2b0c;
+line-height:1.6;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+
+<div class="logo">🥟 SamoussApp</div>
+<div class="sub">Connexion Administrateur</div>
+
+<input type="text" id="user" placeholder="Identifiant">
+<input type="password" id="pass" placeholder="Mot de passe">
+
+<button onclick="login()">Se connecter</button>
+
+<div class="msg" id="msg"></div>
+
+<div class="demo">
+<b>Comptes :</b><br>
+karim / 1234<br>
+admin2 / 5678
+</div>
+
+</div>
+
+<script>
+function login(){
+
+const user=document.getElementById("user").value.trim().toLowerCase();
+const pass=document.getElementById("pass").value.trim();
+const msg=document.getElementById("msg");
+
+if(user==="karim" && pass==="1234"){
+localStorage.setItem("adminLogged","yes");
+localStorage.setItem("adminName","Karim");
+window.location.href="dashboard.html";
+return;
+}
+
+if(user==="admin2" && pass==="5678"){
+localStorage.setItem("adminLogged","yes");
+localStorage.setItem("adminName","Admin 2");
+window.location.href="dashboard.html";
+return;
+}
+
+msg.innerHTML="Identifiants incorrects";
+}
+</script>
+
+</body>
+</html>
