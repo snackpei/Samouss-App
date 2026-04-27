@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Devenir Samoussatier</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(180deg,#fff7ef,#ffe2c1);
+padding:20px;
+}
+
+.box{
+max-width:500px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:28px;
+box-shadow:0 20px 40px rgba(0,0,0,.08);
+}
+
+h1{
+margin:0 0 10px;
+color:#ff6a00;
+font-size:32px;
+}
+
+p{
+color:#6b4d33;
+margin-bottom:25px;
+font-weight:700;
+}
+
+input,textarea{
+width:100%;
+padding:15px;
+margin-bottom:14px;
+border-radius:16px;
+border:2px solid #ffe2c1;
+font-size:16px;
+box-sizing:border-box;
+}
+
+button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:18px;
+background:linear-gradient(180deg,#ff8c00,#ff5a00);
+color:white;
+font-size:18px;
+font-weight:900;
+cursor:pointer;
+}
+
+.msg{
+margin-top:15px;
+font-weight:700;
+text-align:center;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+
+<h1>🥟 Devenir Samoussatier</h1>
+<p>Crée ton compte pro et ajoute ton bar à samoussas.</p>
+
+<input id="nom_bar" placeholder="Nom du bar">
+<input id="nom" placeholder="Nom">
+<input id="prenom" placeholder="Prénom">
+<input id="pseudo" placeholder="Pseudo">
+<input id="ville" placeholder="Ville">
+<input id="telephone" placeholder="Téléphone">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Mot de passe">
+<textarea id="presentation" placeholder="Présentation du bar"></textarea>
+
+<button onclick="inscription()">Créer mon compte</button>
+
+<div class="msg" id="msg"></div>
+
+</div>
+
+<script>
+const supabaseUrl = "https://ofbtvqnfcnzqptnzkkkq.supabase.co";
+const supabaseKey = "TON_ANON_KEY";
+const supabase = window.supabase.createClient(supabaseUrl,supabaseKey);
+
+async function inscription(){
+
+const nom_bar=document.getElementById("nom_bar").value;
+const nom=document.getElementById("nom").value;
+const prenom=document.getElementById("prenom").value;
+const pseudo=document.getElementById("pseudo").value;
+const ville=document.getElementById("ville").value;
+const telephone=document.getElementById("telephone").value;
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+const presentation=document.getElementById("presentation").value;
+const msg=document.getElementById("msg");
+
+msg.innerHTML="Création...";
+
+const { data, error } = await supabase.auth.signUp({
+email: email,
+password: password
+});
+
+if(error){
+msg.innerHTML=error.message;
+return;
+}
+
+const user=data.user;
+
+await supabase.from("samoussatiers").insert([{
+user_id:user.id,
+nom_bar:nom_bar,
+nom_responsable:nom,
+prenom_responsable:prenom,
+pseudo:pseudo,
+ville:ville,
+telephone:telephone,
+email:email,
+presentation:presentation,
+statut:"en_attente"
+}]);
+
+msg.innerHTML="Compte créé avec succès ✅";
+
+setTimeout(()=>{
+window.location.href="index.html";
+},1500);
+
+}
+</script>
+
+</body>
+</html>
