@@ -4,122 +4,236 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Devenir Samoussatier</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
+
 body{
-margin:0;
 font-family:Arial,sans-serif;
-background:linear-gradient(180deg,#fff7ef,#ffe2c1);
+background:linear-gradient(180deg,#fff8ef,#ffe7c9);
 padding:20px;
+color:#241006;
 }
 
-.box{
-max-width:500px;
+.wrap{
+max-width:520px;
 margin:auto;
+}
+
+.card{
 background:white;
-padding:30px;
-border-radius:28px;
-box-shadow:0 20px 40px rgba(0,0,0,.08);
+border-radius:34px;
+padding:28px;
+box-shadow:0 24px 45px rgba(120,60,0,.14);
+overflow:hidden;
+position:relative;
+}
+
+.badge{
+display:inline-block;
+padding:8px 14px;
+border-radius:999px;
+background:#fff1df;
+color:#ff6a00;
+font-weight:900;
+margin-bottom:14px;
 }
 
 h1{
-margin:0 0 10px;
-color:#ff6a00;
-font-size:32px;
+font-size:38px;
+line-height:1.02;
+margin-bottom:10px;
 }
 
-p{
-color:#6b4d33;
-margin-bottom:25px;
+h1 span{
+color:#ff6a00;
+display:block;
+}
+
+.sub{
+color:#6f523d;
 font-weight:700;
+line-height:1.45;
+margin-bottom:22px;
 }
 
 input,textarea{
 width:100%;
-padding:15px;
-margin-bottom:14px;
-border-radius:16px;
-border:2px solid #ffe2c1;
+padding:16px;
+border:none;
+outline:none;
+border-radius:18px;
+background:#fff7ef;
+margin-bottom:12px;
 font-size:16px;
-box-sizing:border-box;
+border:2px solid transparent;
+}
+
+input:focus,textarea:focus{
+border-color:#ffb06a;
+background:white;
+}
+
+textarea{
+min-height:110px;
+resize:none;
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
 }
 
 button{
 width:100%;
-padding:16px;
+padding:18px;
 border:none;
-border-radius:18px;
-background:linear-gradient(180deg,#ff8c00,#ff5a00);
+border-radius:20px;
+background:linear-gradient(180deg,#ff8a00,#ff5a00);
 color:white;
 font-size:18px;
 font-weight:900;
 cursor:pointer;
+box-shadow:0 16px 28px rgba(255,106,0,.28);
+margin-top:8px;
+}
+
+button:hover{
+transform:translateY(-1px);
 }
 
 .msg{
-margin-top:15px;
-font-weight:700;
+margin-top:16px;
+font-weight:800;
 text-align:center;
+}
+
+.back{
+display:inline-block;
+margin-top:18px;
+text-decoration:none;
+font-weight:900;
+color:#8a3700;
+}
+
+.heroicon{
+position:absolute;
+top:-10px;
+right:-10px;
+font-size:90px;
+opacity:.08;
+}
+
+.secure{
+margin-top:18px;
+padding:14px;
+border-radius:18px;
+background:#fff7ef;
+font-size:14px;
+font-weight:700;
+color:#6d513d;
+line-height:1.45;
+}
+
+@media(max-width:520px){
+.row{grid-template-columns:1fr}
+h1{font-size:34px}
 }
 </style>
 </head>
+
 <body>
 
-<div class="box">
+<div class="wrap">
+<div class="card">
 
-<h1>🥟 Devenir Samoussatier</h1>
-<p>Crée ton compte pro et ajoute ton bar à samoussas.</p>
+<div class="heroicon">🥟</div>
 
-<input id="nom_bar" placeholder="Nom du bar">
+<div class="badge">PRO • SAMOUSSATIER</div>
+
+<h1>Fais connaître <span>tes samoussas</span></h1>
+
+<div class="sub">
+Crée ton compte professionnel, gère ta fiche, ajoute tes nouveautés et attire plus de clients sur Samouss'App.
+</div>
+
+<input id="nom_bar" placeholder="Nom du bar / snack">
+<div class="row">
 <input id="nom" placeholder="Nom">
 <input id="prenom" placeholder="Prénom">
-<input id="pseudo" placeholder="Pseudo">
+</div>
+
+<input id="pseudo" placeholder="Pseudo professionnel">
+
+<div class="row">
 <input id="ville" placeholder="Ville">
 <input id="telephone" placeholder="Téléphone">
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Mot de passe">
-<textarea id="presentation" placeholder="Présentation du bar"></textarea>
+</div>
 
-<button onclick="inscription()">Créer mon compte</button>
+<input id="email" placeholder="Email professionnel">
+<input id="password" type="password" placeholder="Mot de passe">
+
+<textarea id="presentation" placeholder="Présente ton bar, tes spécialités, horaires, ambiance..."></textarea>
+
+<button onclick="inscription()">Créer mon compte Samoussatier</button>
 
 <div class="msg" id="msg"></div>
 
+<div class="secure">
+🔒 Tes informations privées (mail, téléphone, nom) ne seront visibles que par toi et l’administration.
+</div>
+
+<a href="index.html" class="back">← Retour accueil</a>
+
+</div>
 </div>
 
 <script>
-const supabaseUrl = "https://ofbtvqnfcnzqptnzkkkq.supabase.co";
-const supabaseKey = "TON_ANON_KEY";
-const supabase = window.supabase.createClient(supabaseUrl,supabaseKey);
+const supabaseUrl="https://ofbtvqnfcnzqptnzkkkq.supabase.co";
+const supabaseKey="sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
+const supabase=window.supabase.createClient(supabaseUrl,supabaseKey);
 
 async function inscription(){
 
-const nom_bar=document.getElementById("nom_bar").value;
-const nom=document.getElementById("nom").value;
-const prenom=document.getElementById("prenom").value;
-const pseudo=document.getElementById("pseudo").value;
-const ville=document.getElementById("ville").value;
-const telephone=document.getElementById("telephone").value;
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
-const presentation=document.getElementById("presentation").value;
+const nom_bar=document.getElementById("nom_bar").value.trim();
+const nom=document.getElementById("nom").value.trim();
+const prenom=document.getElementById("prenom").value.trim();
+const pseudo=document.getElementById("pseudo").value.trim();
+const ville=document.getElementById("ville").value.trim();
+const telephone=document.getElementById("telephone").value.trim();
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value.trim();
+const presentation=document.getElementById("presentation").value.trim();
 const msg=document.getElementById("msg");
 
-msg.innerHTML="Création...";
+if(!nom_bar || !email || !password){
+msg.innerHTML="Remplis au minimum nom du bar, email et mot de passe.";
+msg.style.color="red";
+return;
+}
+
+msg.innerHTML="Création du compte...";
+msg.style.color="#8a3700";
 
 const { data, error } = await supabase.auth.signUp({
-email: email,
-password: password
+email:email,
+password:password
 });
 
 if(error){
 msg.innerHTML=error.message;
+msg.style.color="red";
 return;
 }
 
 const user=data.user;
 
-await supabase.from("samoussatiers").insert([{
+const insert = await supabase
+.from("samoussatiers")
+.insert([{
 user_id:user.id,
 nom_bar:nom_bar,
 nom_responsable:nom,
@@ -132,11 +246,18 @@ presentation:presentation,
 statut:"en_attente"
 }]);
 
+if(insert.error){
+msg.innerHTML="Compte créé mais erreur base de données.";
+msg.style.color="red";
+return;
+}
+
 msg.innerHTML="Compte créé avec succès ✅";
+msg.style.color="green";
 
 setTimeout(()=>{
 window.location.href="index.html";
-},1500);
+},1800);
 
 }
 </script>
