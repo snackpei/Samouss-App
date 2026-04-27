@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard Samoussatier</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:Arial,sans-serif;
+background:linear-gradient(180deg,#fff8ef,#ffe7c9);
+min-height:100vh;
+padding:20px;
+color:#241006;
+}
+
+.wrap{
+max-width:720px;
+margin:auto;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+margin-bottom:18px;
+}
+
+.title{
+font-size:30px;
+font-weight:900;
+color:#ff6a00;
+}
+
+.sub{
+color:#6f523d;
+font-weight:800;
+margin-top:4px;
+}
+
+.logout{
+border:none;
+background:#2b1407;
+color:white;
+padding:12px 16px;
+border-radius:14px;
+font-weight:900;
+cursor:pointer;
+}
+
+.card{
+background:white;
+border-radius:28px;
+padding:22px;
+box-shadow:0 18px 38px rgba(120,60,0,.12);
+margin-bottom:16px;
+}
+
+.badge{
+display:inline-block;
+padding:8px 13px;
+border-radius:999px;
+background:#fff1df;
+color:#ff6a00;
+font-weight:900;
+margin-bottom:12px;
+}
+
+.badge.ok{
+background:#e8ffe8;
+color:#1f7a1f;
+}
+
+.badge.wait{
+background:#fff4d8;
+color:#8a5700;
+}
+
+.badge.no{
+background:#ffe8e8;
+color:#9b1c1c;
+}
+
+h2{
+font-size:24px;
+margin-bottom:12px;
+}
+
+label{
+display:block;
+font-weight:900;
+margin:14px 0 7px;
+color:#4b250c;
+}
+
+input,textarea{
+width:100%;
+padding:15px;
+border:none;
+outline:none;
+border-radius:16px;
+background:#fff7ef;
+font-size:16px;
+border:2px solid transparent;
+}
+
+input:focus,textarea:focus{
+border-color:#ffb06a;
+background:white;
+}
+
+textarea{
+min-height:120px;
+resize:none;
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+button{
+border:none;
+padding:15px 18px;
+border-radius:16px;
+font-weight:900;
+cursor:pointer;
+font-size:15px;
+}
+
+.save{
+width:100%;
+margin-top:18px;
+background:linear-gradient(180deg,#ff8a00,#ff5a00);
+color:white;
+box-shadow:0 12px 24px rgba(255,106,0,.22);
+}
+
+.secondary{
+background:#fff1df;
+color:#5a2b0c;
+}
+
+.msg{
+margin-top:14px;
+font-weight:900;
+text-align:center;
+}
+
+.empty{
+background:white;
+border-radius:24px;
+padding:24px;
+text-align:center;
+font-weight:800;
+color:#7b5a40;
+box-shadow:0 14px 28px rgba(120,60,0,.10);
+}
+
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:14px;
+}
+
+@media(max-width:600px){
+.row{grid-template-columns:1fr}
+.top{align-items:flex-start}
+.title{font-size:26px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="top">
+<div>
+<div class="title">🥟 Espace Samoussatier</div>
+<div class="sub" id="welcome">Chargement...</div>
+</div>
+<button class="logout" onclick="logout()">Déconnexion</button>
+</div>
+
+<div id="content">
+<div class="empty">Chargement de ton espace pro...</div>
+</div>
+
+</div>
+
+<script>
+const supabaseUrl="https://ofbtvqnfcnzqptnzkkkq.supabase.co";
+const supabaseKey="sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
+const supabase=window.supabase.createClient(supabaseUrl,supabaseKey);
+
+let currentUser=null;
+let samoussatier=null;
+
+async function checkSession(){
+const { data } = await supabase.auth.getUser();
+
+if(!data || !data.user){
+window.location.href="connexion-samoussatier.html";
+return;
+}
+
+currentUser=data.user;
+document.getElementById("welcome").innerHTML="Connecté : " + currentUser.email;
+
+loadSamoussatier();
+}
+
+async function loadSamoussatier(){
+
+const content=document.getElementById("content");
+
+const result=await supabase
+.from("samoussatiers")
+.select("*")
+.eq("user_id",currentUser.id)
+.single();
+
+if(result.error || !result.data){
+content.innerHTML=`
+<div class="empty">
+Aucun profil Samoussatier trouvé.<br><br>
+<a href="devenir-samoussatier.html">Créer mon profil</a>
+</div>
+`;
+return;
+}
+
+samoussatier=result.data;
+
+let badgeClass="wait";
+let statutText="En attente de validation";
+
+if(samoussatier.statut==="valide"){
+badgeClass="ok";
+statutText="Compte validé";
+}
+if(samoussatier.statut==="refuse"){
+badgeClass="no";
+statutText="Compte refusé";
+}
+
+content.innerHTML=`
+<div class="card">
+<span class="badge ${badgeClass}">${statutText}</span>
+<h2>${samoussatier.nom_bar || "Mon bar"}</h2>
+
+<div class="actions">
+<button class="secondary" onclick="window.location.href='index.html'">Voir l'accueil</button>
+<button class="secondary" onclick="window.location.href='carte.html'">Voir la carte</button>
+</div>
+</div>
+
+<div class="card">
+<h2>Modifier mes informations</h2>
+
+<label>Nom du bar</label>
+<input id="nom_bar" value="${samoussatier.nom_bar || ""}">
+
+<div class="row">
+<div>
+<label>Nom responsable</label>
+<input id="nom_responsable" value="${samoussatier.nom_responsable || ""}">
+</div>
+<div>
+<label>Prénom responsable</label>
+<input id="prenom_responsable" value="${samoussatier.prenom_responsable || ""}">
+</div>
+</div>
+
+<label>Pseudo professionnel</label>
+<input id="pseudo" value="${samoussatier.pseudo || ""}">
+
+<div class="row">
+<div>
+<label>Ville</label>
+<input id="ville" value="${samoussatier.ville || ""}">
+</div>
+<div>
+<label>Téléphone</label>
+<input id="telephone" value="${samoussatier.telephone || ""}">
+</div>
+</div>
+
+<label>Email</label>
+<input id="email" value="${samoussatier.email || ""}" disabled>
+
+<label>Présentation</label>
+<textarea id="presentation">${samoussatier.presentation || ""}</textarea>
+
+<button class="save" onclick="saveProfile()">Enregistrer les modifications</button>
+<div class="msg" id="msg"></div>
+</div>
+
+<div class="card">
+<h2>Nouveautés du bar</h2>
+<p style="color:#6f523d;font-weight:700;line-height:1.5">
+Bientôt ici, tu pourras publier tes nouveaux samoussas, promos du jour, horaires spéciaux et photos.
+</p>
+</div>
+`;
+}
+
+async function saveProfile(){
+
+const msg=document.getElementById("msg");
+msg.innerHTML="Enregistrement...";
+msg.style.color="#8a3700";
+
+const update=await supabase
+.from("samoussatiers")
+.update({
+nom_bar:document.getElementById("nom_bar").value.trim(),
+nom_responsable:document.getElementById("nom_responsable").value.trim(),
+prenom_responsable:document.getElementById("prenom_responsable").value.trim(),
+pseudo:document.getElementById("pseudo").value.trim(),
+ville:document.getElementById("ville").value.trim(),
+telephone:document.getElementById("telephone").value.trim(),
+presentation:document.getElementById("presentation").value.trim()
+})
+.eq("user_id",currentUser.id);
+
+if(update.error){
+msg.innerHTML="Erreur : " + update.error.message;
+msg.style.color="red";
+return;
+}
+
+msg.innerHTML="Modifications enregistrées ✅";
+msg.style.color="green";
+loadSamoussatier();
+}
+
+async function logout(){
+await supabase.auth.signOut();
+localStorage.removeItem("samoussatier");
+window.location.href="connexion-samoussatier.html";
+}
+
+checkSession();
+</script>
+
+</body>
+</html>
