@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Connexion Samoussatier</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:Arial,sans-serif;
+background:linear-gradient(180deg,#fff8ef,#ffe7c9);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+color:#241006;
+}
+
+.wrap{
+width:100%;
+max-width:520px;
+}
+
+.card{
+background:white;
+border-radius:34px;
+padding:30px;
+box-shadow:0 24px 45px rgba(120,60,0,.14);
+position:relative;
+overflow:hidden;
+}
+
+.logo{
+font-size:48px;
+margin-bottom:10px;
+}
+
+.badge{
+display:inline-block;
+padding:8px 14px;
+border-radius:999px;
+background:#fff1df;
+color:#ff6a00;
+font-weight:900;
+margin-bottom:14px;
+}
+
+h1{
+font-size:36px;
+line-height:1.05;
+margin-bottom:10px;
+}
+
+.sub{
+color:#6f523d;
+font-weight:700;
+line-height:1.45;
+margin-bottom:22px;
+}
+
+input{
+width:100%;
+padding:16px;
+border:none;
+outline:none;
+border-radius:18px;
+background:#fff7ef;
+margin-bottom:12px;
+font-size:16px;
+border:2px solid transparent;
+}
+
+input:focus{
+border-color:#ffb06a;
+background:white;
+}
+
+button{
+width:100%;
+padding:18px;
+border:none;
+border-radius:20px;
+background:linear-gradient(180deg,#ff8a00,#ff5a00);
+color:white;
+font-size:18px;
+font-weight:900;
+cursor:pointer;
+box-shadow:0 16px 28px rgba(255,106,0,.28);
+margin-top:6px;
+}
+
+button:hover{
+transform:translateY(-1px);
+}
+
+.msg{
+margin-top:16px;
+font-weight:800;
+text-align:center;
+}
+
+.links{
+margin-top:18px;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.links a{
+text-decoration:none;
+font-weight:900;
+color:#8a3700;
+text-align:center;
+}
+
+.heroicon{
+position:absolute;
+top:-10px;
+right:-10px;
+font-size:90px;
+opacity:.08;
+}
+
+@media(max-width:520px){
+h1{font-size:32px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+<div class="card">
+
+<div class="heroicon">🥟</div>
+
+<div class="logo">🥟</div>
+<div class="badge">ESPACE PRO</div>
+
+<h1>Connexion Samoussatier</h1>
+
+<div class="sub">
+Connecte-toi pour gérer ton bar, répondre aux avis et publier tes nouveautés.
+</div>
+
+<input type="email" id="email" placeholder="Adresse email">
+<input type="password" id="password" placeholder="Mot de passe">
+
+<button onclick="connexion()">Se connecter</button>
+
+<div class="msg" id="msg"></div>
+
+<div class="links">
+<a href="devenir-samoussatier.html">Créer un compte Samoussatier</a>
+<a href="index.html">← Retour accueil</a>
+</div>
+
+</div>
+</div>
+
+<script>
+const supabaseUrl="https://ofbtvqnfcnzqptnzkkkq.supabase.co";
+const supabaseKey="sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
+const supabase=window.supabase.createClient(supabaseUrl,supabaseKey);
+
+async function connexion(){
+
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value.trim();
+const msg=document.getElementById("msg");
+
+if(!email || !password){
+msg.innerHTML="Remplis email et mot de passe.";
+msg.style.color="red";
+return;
+}
+
+msg.innerHTML="Connexion...";
+msg.style.color="#8a3700";
+
+const { data, error } = await supabase.auth.signInWithPassword({
+email:email,
+password:password
+});
+
+if(error){
+msg.innerHTML="Identifiants incorrects.";
+msg.style.color="red";
+return;
+}
+
+localStorage.setItem("samoussatier","connecte");
+
+msg.innerHTML="Connexion réussie ✅";
+msg.style.color="green";
+
+setTimeout(()=>{
+window.location.href="dashboard-samoussatier.html";
+},1000);
+
+}
+</script>
+
+</body>
+</html>
