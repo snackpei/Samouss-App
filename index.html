@@ -4,184 +4,206 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Samouss'App</title>
+
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#ff7300">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
 font-family:Arial,sans-serif;
 background:linear-gradient(180deg,#fff8ef,#ffe8cf);
 color:#241006;
-padding-bottom:90px;
+padding-bottom:95px;
 }
+
 .app{
 max-width:520px;
 margin:auto;
 min-height:100vh;
 background:#fffaf3;
-position:relative;
 overflow:hidden;
 }
+
 .header{
 padding:18px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+font-weight:900;
 color:#9b3f00;
-font-weight:900;
 position:relative;
-z-index:20;
 }
+
 .menu-btn{
-font-size:38px;
-font-weight:900;
+font-size:34px;
 cursor:pointer;
-line-height:1;
-padding:4px 10px;
+padding:6px 10px;
 border-radius:12px;
 }
+
 .menu-panel{
 display:none;
 position:absolute;
 top:62px;
 left:18px;
 right:18px;
-background:white;
+background:#fff;
 border-radius:22px;
-box-shadow:0 18px 35px rgba(130,70,0,.18);
 padding:14px;
-z-index:30;
+box-shadow:0 18px 35px rgba(0,0,0,.12);
+z-index:20;
 }
+
 .menu-panel a{
 display:block;
-padding:15px;
-border-radius:14px;
+padding:14px;
 text-decoration:none;
-color:#5a2b0c;
 font-weight:900;
-border-bottom:1px solid #ffe0bf;
+color:#5a2b0c;
+border-bottom:1px solid #ffe5c7;
 }
-.menu-panel a:last-child{border-bottom:none}
+
+.menu-panel a:last-child{
+border-bottom:none;
+}
+
 .hero{
 margin:0 18px;
-border-radius:30px;
+border-radius:28px;
 padding:28px 22px;
-min-height:360px;
+min-height:340px;
 background:
-linear-gradient(90deg,rgba(255,250,243,.95) 0%,rgba(255,250,243,.72) 42%,rgba(255,255,255,.05) 100%),
+linear-gradient(90deg,rgba(255,250,243,.95),rgba(255,250,243,.70)),
 url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80");
 background-size:cover;
-background-position:center right;
+background-position:center;
 position:relative;
-overflow:hidden;
-box-shadow:0 18px 35px rgba(130,70,0,.18);
+box-shadow:0 18px 35px rgba(130,70,0,.15);
 }
+
 .hero h1{
-font-size:36px;
-line-height:1.05;
+font-size:34px;
+line-height:1.08;
 max-width:300px;
 font-weight:900;
 }
+
 .hero h1 span{
-color:#f45a00;
-font-style:italic;
-font-size:44px;
+color:#ff6200;
+font-size:42px;
 }
+
 .hero p{
 margin-top:14px;
 font-size:16px;
 max-width:260px;
-font-weight:700;
 line-height:1.5;
+font-weight:700;
 }
+
 .cta{
 display:inline-block;
-margin-top:20px;
-background:linear-gradient(180deg,#ff8a00,#ff5a00);
-color:white;
+margin-top:18px;
 padding:14px 18px;
-border-radius:14px;
+background:linear-gradient(180deg,#ff8a00,#ff5a00);
+color:#fff;
 font-weight:900;
 text-decoration:none;
-box-shadow:0 10px 20px rgba(255,90,0,.25);
+border-radius:14px;
 }
+
 .hot-card{
 position:absolute;
 left:18px;
 right:18px;
 bottom:18px;
-background:rgba(255,255,255,.95);
-border-radius:22px;
+background:#fff;
 padding:14px;
+border-radius:20px;
 font-weight:900;
-box-shadow:0 10px 24px rgba(130,70,0,.18);
+box-shadow:0 10px 20px rgba(0,0,0,.08);
 }
+
 .section{
 margin:18px;
 padding:18px;
-background:rgba(255,255,255,.86);
+background:rgba(255,255,255,.90);
 border-radius:26px;
-box-shadow:0 10px 24px rgba(130,70,0,.10);
+box-shadow:0 10px 24px rgba(130,70,0,.08);
 }
+
 .section-head{
 display:flex;
 justify-content:space-between;
 align-items:center;
 margin-bottom:14px;
 }
+
 .section-title{
 font-size:24px;
 font-weight:900;
 }
+
 .see-all{
 color:#ff5a00;
 font-weight:900;
 text-decoration:none;
-font-size:14px;
 }
+
 .categories{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:12px;
 }
+
 .category{
 background:#fffaf3;
 border-radius:18px;
 padding:12px;
-text-align:left;
-box-shadow:0 8px 18px rgba(130,70,0,.08);
-border:1px solid #ffe0bf;
-font-weight:900;
-text-decoration:none;
-color:#2b1608;
 min-height:145px;
+border:1px solid #ffe0bf;
+text-decoration:none;
+color:#241006;
+font-weight:900;
 position:relative;
 overflow:hidden;
 display:flex;
 flex-direction:column;
 justify-content:space-between;
 }
+
 .category::after{
 content:"";
 position:absolute;
-left:0;right:0;bottom:0;
-height:54px;
+left:0;
+right:0;
+bottom:0;
+height:55px;
 background:url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=250&q=80");
 background-size:cover;
 background-position:center;
 opacity:.95;
-z-index:1;
 }
+
 .category::before{
 content:"";
 position:absolute;
-left:0;right:0;bottom:0;
-height:75px;
-background:linear-gradient(180deg,rgba(255,250,243,0),rgba(255,250,243,.92));
-z-index:2;
+left:0;
+right:0;
+bottom:0;
+height:70px;
+background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.92));
+z-index:1;
 }
+
 .cat-icon{
 width:42px;
 height:42px;
@@ -190,22 +212,82 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-size:20px;
-color:white;
+color:#fff;
+z-index:2;
 position:relative;
-z-index:3;
 }
+
 .category span{
+font-size:18px;
+z-index:2;
 position:relative;
-z-index:3;
-font-size:20px;
-line-height:1;
 }
-.green{background:#7bbf2a}
-.orange{background:#ff7a00}
-.red{background:#e85045}
-.gold{background:#ffb000}
-.brown{background:#8b4513}
-.pink{background:#ff7aa2}
+
+.green{background:#79bf29;}
+.orange{background:#ff7a00;}
+.red{background:#e84f43;}
+.gold{background:#ffb000;}
+.brown{background:#8b4513;}
+.pink{background:#ff78a0;}
+
+.empty{
+background:#fff;
+padding:22px;
+border-radius:20px;
+text-align:center;
+color:#7b5a40;
+}
+
+.promo-grid{
+display:grid;
+gap:14px;
+}
+
+.promo-card{
+border-radius:22px;
+padding:18px;
+min-height:160px;
+background:
+linear-gradient(90deg,rgba(255,255,255,.95),rgba(255,245,230,.78)),
+url("https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=80");
+background-size:cover;
+background-position:center;
+}
+
+.promo-card h3{
+color:#ff5a00;
+font-size:18px;
+margin-bottom:8px;
+}
+
+.promo-card strong{
+display:block;
+font-size:30px;
+margin-bottom:12px;
+}
+
+.small-btn{
+display:inline-block;
+padding:12px 16px;
+border-radius:12px;
+background:#ff6a00;
+color:#fff;
+font-weight:900;
+text-decoration:none;
+}
+
+.add-link{
+display:block;
+margin:18px;
+padding:16px;
+text-align:center;
+background:#5a2b0c;
+color:#fff;
+font-weight:900;
+text-decoration:none;
+border-radius:18px;
+}
+
 .bottom-nav{
 position:fixed;
 left:50%;
@@ -213,27 +295,31 @@ bottom:0;
 transform:translateX(-50%);
 width:100%;
 max-width:520px;
-background:white;
+background:#fff;
 border-radius:28px 28px 0 0;
-box-shadow:0 -8px 25px rgba(0,0,0,.08);
 display:grid;
 grid-template-columns:repeat(4,1fr);
 padding:12px 5px;
-z-index:10;
+box-shadow:0 -8px 20px rgba(0,0,0,.08);
 }
+
 .nav-item{
 text-align:center;
-font-size:12px;
-color:#6b5140;
-font-weight:700;
 text-decoration:none;
+font-size:12px;
+font-weight:700;
+color:#6b5140;
 }
+
 .nav-item span{
 display:block;
 font-size:24px;
 margin-bottom:4px;
 }
-.active{color:#ff7300}
+
+.active{
+color:#ff7300;
+}
 </style>
 </head>
 
@@ -249,8 +335,7 @@ margin-bottom:4px;
 <div class="menu-panel" id="menuPanel">
 <a href="devenir-samoussatier.html">🥟 Devenir Samoussatier</a>
 <a href="ajouter.html">➕ Ajouter son bar</a>
-<a href="carte.html">🗺️ Accéder à la carte</a>
-<a href="#bars">🔥 Bars validés</a>
+<a href="carte.html">🗺️ Carte</a>
 <a href="classement.html">⭐ Classements</a>
 <a href="login.html">🔐 Admin</a>
 </div>
@@ -270,13 +355,49 @@ margin-bottom:4px;
 </div>
 
 <div class="categories">
-<a class="category" href="#"><div class="cat-icon green">🌿</div><span>Végé</span></a>
-<a class="category" href="#"><div class="cat-icon orange">🐔</div><span>Poulet</span></a>
-<a class="category" href="#"><div class="cat-icon red">🐷</div><span>Porc</span></a>
-<a class="category" href="#"><div class="cat-icon gold">☪</div><span>Halal</span></a>
-<a class="category" href="#"><div class="cat-icon brown">🐂</div><span>Bœuf</span></a>
-<a class="category" href="#"><div class="cat-icon pink">⭐</div><span>Spéciaux</span></a>
+<a class="category"><div class="cat-icon green">🌿</div><span>Végé</span></a>
+<a class="category"><div class="cat-icon orange">🐔</div><span>Poulet</span></a>
+<a class="category"><div class="cat-icon red">🐷</div><span>Porc</span></a>
+<a class="category"><div class="cat-icon gold">☪</div><span>Halal</span></a>
+<a class="category"><div class="cat-icon brown">🐂</div><span>Bœuf</span></a>
+<a class="category"><div class="cat-icon pink">⭐</div><span>Spéciaux</span></a>
 </div>
+</div>
+
+<div class="section" id="bars">
+<div class="section-head">
+<div>
+<div class="section-title">Bars proches</div>
+<div style="color:#7b5a40">Les meilleurs samoussas près de toi</div>
+</div>
+<a class="see-all" href="carte.html">Voir tout</a>
+</div>
+
+<div id="barsList">
+<div class="empty">Chargement des bars...</div>
+</div>
+</div>
+
+<div class="section">
+<div class="promo-grid">
+
+<div class="promo-card">
+<h3>Samoussa du jour</h3>
+<strong>Poulet Massalé</strong>
+<a href="#" class="small-btn">Découvrir</a>
+</div>
+
+<div class="promo-card">
+<h3>Promo du week-end</h3>
+<strong>-10% sur tout</strong>
+<a href="#" class="small-btn">J’en profite</a>
+</div>
+
+</div>
+</div>
+
+<a href="ajouter.html" class="add-link">Ajouter mon bar à samoussas</a>
+
 </div>
 
 <div class="bottom-nav">
@@ -286,13 +407,49 @@ margin-bottom:4px;
 <a class="nav-item" href="classement.html"><span>★</span>Top</a>
 </div>
 
-</div>
-
 <script>
-document.getElementById("menuBtn").addEventListener("click", function(){
+const supabaseUrl="https://ofbtvqnfcnzqptnzkkkq.supabase.co";
+const supabaseKey="sb_publishable_Anto7ahmj6Q7soSmd8QGgg_-uzGOQFn";
+const supabaseClient=window.supabase.createClient(supabaseUrl,supabaseKey);
+
+document.getElementById("menuBtn").onclick=function(){
 const menu=document.getElementById("menuPanel");
 menu.style.display=menu.style.display==="block"?"none":"block";
+};
+
+async function loadBars(){
+const barsList=document.getElementById("barsList");
+
+const result=await supabaseClient
+.from("BARS")
+.select("*")
+.eq("STATUT","valide")
+.order("created_at",{ascending:false});
+
+if(result.error){
+barsList.innerHTML='<div class="empty">Erreur chargement</div>';
+return;
+}
+
+if(!result.data || result.data.length===0){
+barsList.innerHTML='<div class="empty">Aucun bar validé pour le moment.</div>';
+return;
+}
+
+barsList.innerHTML="";
+
+result.data.forEach(bar=>{
+barsList.innerHTML+=`
+<div class="promo-card" style="margin-bottom:12px">
+<h3>${bar.NOM || "Bar Samoussa"}</h3>
+<strong>${bar.VILLE || ""}</strong>
+<a href="bar.html?slug=${bar.SLUG || ""}" class="small-btn">Voir</a>
+</div>
+`;
 });
+}
+
+loadBars();
 
 if("serviceWorker" in navigator){
 navigator.serviceWorker.register("sw.js");
