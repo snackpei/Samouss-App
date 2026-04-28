@@ -2,21 +2,23 @@ const CACHE_NAME = "samoussapp-v3";
 
 const FILES_TO_CACHE = [
   "./",
-  "index.html?v=2",
-  "bar.html?v=2",
-  "carte.html?v=2",
-  "categorie.html?v=2",
-  "ajouter.html?v=2",
-  "login.html?v=2",
-  "dashboard.html?v=2",
-  "devenir-samoussatier.html?v=2",
-  "connexion-samoussatier.html?v=2",
-  "dashboard-samoussatier.html?v=2",
+  "index.html?v=3",
+  "bar.html?v=3",
+  "carte.html?v=3",
+  "categorie.html?v=3",
+  "ajouter.html?v=3",
+  "login.html?v=3",
+  "dashboard.html?v=3",
+  "devenir-samoussatier.html?v=3",
+  "connexion-samoussatier.html?v=3",
+  "dashboard-samoussatier.html?v=3",
   "manifest.json",
-  "icon-192.png?v=2",
-  "icon-512.png?v=2"
+  "icon-192.png?v=3",
+  "icon-512.png?v=3"
 ];
 
+
+// INSTALLATION (cache initial)
 self.addEventListener("install", function(event){
   self.skipWaiting();
 
@@ -27,6 +29,8 @@ self.addEventListener("install", function(event){
   );
 });
 
+
+// ACTIVATION (supprime anciens caches)
 self.addEventListener("activate", function(event){
   event.waitUntil(
     caches.keys().then(function(keys){
@@ -43,10 +47,14 @@ self.addEventListener("activate", function(event){
   );
 });
 
+
+// FETCH (toujours prioriser internet)
 self.addEventListener("fetch", function(event){
   event.respondWith(
     fetch(event.request)
       .then(function(response){
+
+        // clone pour stockage
         const responseClone = response.clone();
 
         caches.open(CACHE_NAME).then(function(cache){
@@ -54,9 +62,13 @@ self.addEventListener("fetch", function(event){
         });
 
         return response;
+
       })
       .catch(function(){
+
+        // fallback cache si offline
         return caches.match(event.request);
+
       })
   );
 });
